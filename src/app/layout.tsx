@@ -9,6 +9,8 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+
+
 export default function RootLayout({
   children,
 }: {
@@ -18,7 +20,7 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <Sidebar />
-        <main className="bg-zinc-50">
+        <main className="bg-zinc-50 lg:ml-60">
           {children}
         </main>
       </body>

@@ -4,7 +4,8 @@ Librify is a personalized digital library where I curate and showcase my favorit
 
 ## Check Box
 
-- [ ] Make it deploy
-- [ ] Scalfold the ui (navbar & sidebar)
+- [x] Make it deploy
+- [x] Scalfold the ui (navbar & sidebar)
+- [ ] Make the ui to show item (books & podcast)
 - [ ] Set up database
 
