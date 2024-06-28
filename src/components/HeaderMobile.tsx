@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import { SIDENAV_ITEMS } from '~/types/side-bar-const';
 import { SideNavItem } from '~/types/SideNavItem';
 import { motion, useCycle } from 'framer-motion';
@@ -36,7 +34,7 @@ const sidebar = {
 
 const HeaderMobile = () => {
 	const pathname = usePathname();
-	const containerRef = useRef(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 	const { height } = useDimensions(containerRef);
 	const [isOpen, toggleOpen] = useCycle(false, true);
 
@@ -45,8 +43,7 @@ const HeaderMobile = () => {
 			initial={false}
 			animate={isOpen ? 'open' : 'closed'}
 			custom={height}
-			className={`fixed inset-0 z-50 w-full md:hidden ${isOpen ? '' : 'pointer-events-none'
-				}`}
+			className={`fixed inset-0 z-50 w-full md:hidden ${isOpen ? '' : 'pointer-events-none'}`}
 			ref={containerRef}
 		>
 			<motion.div
@@ -58,7 +55,7 @@ const HeaderMobile = () => {
 				className="absolute grid w-full gap-3 px-10 py-16 max-h-screen overflow-y-auto"
 			>
 				{SIDENAV_ITEMS.map((item, idx) => {
-					const isLastItem = idx === SIDENAV_ITEMS.length - 1; // Check if it's the last item
+					const isLastItem = idx === SIDENAV_ITEMS.length - 1;
 
 					return (
 						<div key={idx}>
@@ -69,8 +66,7 @@ const HeaderMobile = () => {
 									<Link
 										href={item.path}
 										onClick={() => toggleOpen()}
-										className={`flex w-full text-2xl ${item.path === pathname ? 'font-bold' : ''
-											}`}
+										className={`flex w-full text-2xl ${item.path === pathname ? 'font-bold' : ''}`}
 									>
 										{item.title}
 									</Link>
@@ -91,7 +87,7 @@ const HeaderMobile = () => {
 
 export default HeaderMobile;
 
-const MenuToggle = ({ toggle }: { toggle: any }) => (
+const MenuToggle = ({ toggle }: { toggle: () => void }) => (
 	<button
 		onClick={toggle}
 		className="pointer-events-auto absolute right-4 top-[14px] z-30"
@@ -160,9 +156,7 @@ const MenuItemWithSubMenu: React.FC<MenuItemWithSubMenuProps> = ({
 					onClick={() => setSubMenuOpen(!subMenuOpen)}
 				>
 					<div className="flex flex-row justify-between w-full items-center">
-						<span
-							className={`${pathname.includes(item.path) ? 'font-bold' : ''}`}
-						>
+						<span className={`${pathname.includes(item.path) ? 'font-bold' : ''}`}>
 							{item.title}
 						</span>
 						<div className={`${subMenuOpen && 'rotate-180'}`}>
@@ -180,8 +174,7 @@ const MenuItemWithSubMenu: React.FC<MenuItemWithSubMenuProps> = ({
 									<Link
 										href={subItem.path}
 										onClick={() => toggleOpen()}
-										className={` ${subItem.path === pathname ? 'font-bold' : ''
-											}`}
+										className={` ${subItem.path === pathname ? 'font-bold' : ''}`}
 									>
 										{subItem.title}
 									</Link>
@@ -222,7 +215,7 @@ const variants = {
 	},
 };
 
-const useDimensions = (ref: any) => {
+const useDimensions = (ref: React.RefObject<HTMLDivElement>) => {
 	const dimensions = useRef({ width: 0, height: 0 });
 
 	useEffect(() => {
@@ -235,3 +228,4 @@ const useDimensions = (ref: any) => {
 
 	return dimensions.current;
 };
+
