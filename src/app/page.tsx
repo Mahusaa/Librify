@@ -5,12 +5,13 @@ import { authOptions } from "~/server/auth";
 export default async function HomePage() {
   const session = await getServerSession(authOptions)
   return (
-    <div className="flex min-h-screen flex-col ml-4 items-start justify-start">
-      <h1 className="text-xl font-semibold">Home Page</h1>
 
-      <pre>{JSON.stringify(session, null, 2)}</pre>
+    <>
+      <span className="font-bold text-4xl">Home</span>
+      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
+      <pre>{JSON.stringify(session?.user, null, 2)}</pre>
 
-    </div>
+    </>
   );
 }
 

@@ -1,60 +1,93 @@
+'use client';
 
-import { Disclosure, DisclosureButton, } from '@headlessui/react';
-import { Menu, House, BookOpen, Podcast, Settings } from 'lucide-react'
+import React, { useState } from 'react';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-export const Sidebar: React.FC = () => {
+import { SIDENAV_ITEMS } from '~/types/side-bar-const';
+import { SideNavItem } from '~/types/SideNavItem';
+import { ChevronDown } from 'lucide-react';
+
+const SideBar = () => {
 	return (
-		<div>
-			<Disclosure as="nav">
-				<DisclosureButton className="absolute top-4 right-4 inline-flex items-center peer justify-center rounded-md p-2 text-gray-800 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white group md:hidden lg:hidden">
-					<Menu
-						className="block md:hidden lg:hidden h-6 w-6"
-						aria-hidden="true"
-					/>
-				</DisclosureButton>
-				<div className="p-6 w-1/2 h-screen bg-white z-20 fixed top-0 -left-96 lg:left-0 lg:w-60  peer-focus:left-0 peer:transition ease-out delay-150 rounded-md duration-200">
-					<div className="flex flex-col justify-start item-center">
-						<h1 className="text-base text-center cursor-pointer font-bold text-blue-900 border-b border-gray-100 pb-4 w-full">
-							Librify
-						</h1>
-						<div className=" my-4 border-b border-gray-100 pb-28">
-							<Link href="/">
-								<div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-									<House className="text-2xl text-gray-600 group-hover:text-white " />
-									<h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-										Home Page
-									</h3>
-								</div>
-							</Link>
-							<Link href='/books'>
-								<div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-									<BookOpen className="text-2xl text-gray-600 group-hover:text-white " />
-									<h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-										Book
-									</h3>
-								</div>
-							</Link>
-							<Link href="/podcast">
-								<div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-									<Podcast className="text-2xl text-gray-600 group-hover:text-white " />
-									<h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-										Podcast
-									</h3>
-								</div>
-							</Link>
-						</div>
-						<div className=" my-4 border-b border-gray-100 pb-4">
-							<div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-								<Settings className="text-2xl text-gray-600 group-hover:text-white " />
-								<h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-									Settings
-								</h3>
-							</div>
-						</div>
-					</div>
+		<div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
+			<div className="flex flex-col space-y-6 w-full">
+				<Link
+					href="/"
+					className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
+				>
+					<span className="h-7 w-7 bg-zinc-300 rounded-lg" />
+					<span className="font-bold text-xl hidden md:flex">Librify</span>
+				</Link>
+
+				<div className="flex flex-col space-y-2  md:px-6 ">
+					{SIDENAV_ITEMS.map((item, idx) => {
+						return <MenuItem key={idx} item={item} />;
+					})}
 				</div>
-			</Disclosure>
+			</div>
 		</div>
-	)
-}
+	);
+};
+
+export default SideBar;
+
+const MenuItem = ({ item }: { item: SideNavItem }) => {
+	const pathname = usePathname();
+	const [subMenuOpen, setSubMenuOpen] = useState(false);
+	const toggleSubMenu = () => {
+		setSubMenuOpen(!subMenuOpen);
+	};
+
+	return (
+		<div className="">
+			{item.submenu ? (
+				<>
+					<button
+						onClick={toggleSubMenu}
+						className={`flex flex-row items-center p-2 rounded-lg hover-bg-zinc-100 w-full justify-between hover:bg-zinc-100 ${pathname.includes(item.path) ? 'bg-zinc-100' : ''
+							}`}
+					>
+						<div className="flex flex-row space-x-4 items-center">
+							{item.icon}
+							<span className="font-semibold text-xl  flex">{item.title}</span>
+						</div>
+
+						<div className={`${subMenuOpen ? 'rotate-180' : ''} flex`}>
+							<ChevronDown className="w-6 h-6" />
+						</div>
+					</button>
+
+					{subMenuOpen && (
+						<div className="my-2 ml-12 flex flex-col space-y-4">
+							{item.subMenuItems?.map((subItem, idx) => {
+								return (
+									<Link
+										key={idx}
+										href={subItem.path}
+										className={`${subItem.path === pathname ? 'font-bold' : ''
+											}`}
+									>
+										<span>{subItem.title}</span>
+									</Link>
+								);
+							})}
+						</div>
+					)}
+				</>
+			) : (
+				<Link
+					href={item.path}
+					className={`flex flex-row space-x-4 items-center p-2 rounded-lg hover:bg-zinc-100 ${item.path === pathname ? 'bg-zinc-100' : ''
+						}`}
+				>
+					{item.icon}
+					<span className="font-semibold text-xl flex">{item.title}</span>
+				</Link>
+			)}
+		</div>
+	);
+};
+
+
