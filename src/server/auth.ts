@@ -46,10 +46,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, user, token }) => ({
       ...session,
-      user: {
-        ...session,
-        id: user.id,
-      },
+
     }),
   },
   adapter: DrizzleAdapter(db, {
