@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -136,7 +136,7 @@ const MenuItem = ({
 	children,
 }: {
 	className?: string;
-	children?: ReactNode;
+	children?: React.ReactNode;
 }) => {
 	return (
 		<motion.li variants={MenuItemVariants} className={className}>

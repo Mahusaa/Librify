@@ -22,7 +22,7 @@ const AvatarWrap: React.FC = () => {
 	return (
 		<Avatar className="w-8 h-8">
 			{session.user?.image ? (
-				<AvatarImage src={session.user.image} alt={session.user.name || 'User'} />
+				<AvatarImage src={session.user.image} alt={session.user.name ?? 'User'} />
 			) : (
 				<AvatarFallback>{session.user?.name ? session.user.name[0] : 'CN'}</AvatarFallback>
 			)}
