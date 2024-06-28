@@ -1,12 +1,14 @@
-'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
+'use client'
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SIDENAV_ITEMS } from '~/types/side-bar-const';
 import { SideNavItem } from '~/types/SideNavItem';
-import { motion, useCycle } from 'framer-motion';
+import { motion, useCycle, SVGMotionProps } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { SVGProps } from 'react';
+
+type PathProps = SVGProps<SVGPathElement> & SVGMotionProps<SVGPathElement>;
 
 type MenuItemWithSubMenuProps = {
 	item: SideNavItem;
@@ -117,12 +119,13 @@ const MenuToggle = ({ toggle }: { toggle: () => void }) => (
 	</button>
 );
 
-const Path = (props: any) => (
+const Path = (props: PathProps) => (
 	<motion.path
 		fill="transparent"
 		strokeWidth="2"
 		stroke="hsl(0, 0%, 18%)"
 		strokeLinecap="round"
+		d={props.d}
 		{...props}
 	/>
 );
@@ -223,7 +226,6 @@ const useDimensions = (ref: React.RefObject<HTMLDivElement>) => {
 			dimensions.current.width = ref.current.offsetWidth;
 			dimensions.current.height = ref.current.offsetHeight;
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ref]);
 
 	return dimensions.current;
