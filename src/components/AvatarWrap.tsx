@@ -1,11 +1,15 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem, DropdownMenuShortcut } from './ui/dropdown-menu';
+import { LogOut } from 'lucide-react';
+import UserLogoutForm from './UserLogoutForm';
 
 const AvatarWrap: React.FC = () => {
 	const { data: session, status } = useSession();
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	if (status === 'loading') {
 		return (
@@ -60,10 +64,17 @@ const AvatarWrap: React.FC = () => {
 					<DropdownMenuItem>New Team</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>
-					Log out
-					<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-				</DropdownMenuItem>
+				<UserLogoutForm>
+					<DropdownMenuItem onSelect={(e) => {
+						e.preventDefault();
+						setIsDialogOpen(true);
+
+					}}>
+						Log out
+						<DropdownMenuShortcut><LogOut className="w-4 h-4" /></DropdownMenuShortcut>
+					</DropdownMenuItem>
+				</UserLogoutForm>
+
 
 			</DropdownMenuContent>
 		</DropdownMenu>
