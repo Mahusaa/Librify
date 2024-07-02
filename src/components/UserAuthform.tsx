@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import { cn } from '~/lib/utils';
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement> & {
-	loginProvider: 'discord' | 'github' | string;
+	loginProvider: string;
 	buttonLabel: string;
 	icon: React.ReactNode;
 };

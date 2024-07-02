@@ -39,7 +39,7 @@ export function DialogSignIn({ children }: { children: React.ReactNode }) {
 				<ProfileForm />
 				<DialogFooter className="flex justify-center">
 					<span className="w-full text-gray-400 text-center text-sm">
-						Don't have an account? <a href="/signup" className="underline">Sign up</a>
+						Don&apos;t have an account? <a href="/signup" className="underline">Sign up</a>
 					</span>
 				</DialogFooter>
 			</DialogContent>

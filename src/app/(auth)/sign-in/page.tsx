@@ -24,7 +24,7 @@ const Page: FC = () => {
           </Button>
         </CardContent>
         <CardFooter className="mt-6 text-center">
-          <span className="text-gray-400">Don't have an account? Sign up</span>
+          <span className="text-gray-400">Don&apos;t have an account? Sign up</span>
         </CardFooter>
       </Card>
     </div>
