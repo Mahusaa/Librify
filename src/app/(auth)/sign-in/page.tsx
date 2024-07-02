@@ -1,27 +1,32 @@
-import { buttonVariants } from '~/components/ui/button';
-import { cn } from '~/lib/utils';
-import SignUp from '~/components/SignUp';
-import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
 import type { FC } from 'react';
+import { Button } from '~/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from '~/components/ui/card';
+import { DiscordLogoIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 
 const Page: FC = () => {
   return (
-    <div className='absolute inset-0'>
-      <div className='h-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-20'>
-        <Link
-          href='/'
-          className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            'self-start -mt-20'
-          )}
-        >
-          <ChevronLeft className='mr-2 h-4 w-4' />
-          Home
-        </Link>
-
-        <SignUp />
-      </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <Card className="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-lg">
+        <CardHeader className="mb-4">
+          <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
+          <CardDescription className="text-center">
+            Choose a login method below
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Button variant="outline" className="w-full flex items-center justify-center space-x-2 border-gray-600 hover:bg-gray-700">
+            <DiscordLogoIcon className="h-5 w-5" />
+            <span>Login with Discord</span>
+          </Button>
+          <Button variant="outline" className="w-full flex items-center justify-center space-x-2 border-gray-600 hover:bg-gray-700">
+            <GitHubLogoIcon className="h-5 w-5" />
+            <span>Login with GitHub</span>
+          </Button>
+        </CardContent>
+        <CardFooter className="mt-6 text-center">
+          <span className="text-gray-400">Don't have an account? Sign up</span>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

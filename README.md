@@ -6,6 +6,9 @@ Librify is a personalized digital library where I curate and showcase my favorit
 
 - [x] Make it deploy
 - [x] Scalfold the ui (navbar & sidebar)
+- [x] Avatar with the menu 
+- [x] Sign In dialog (desktop)
+- [ ] Sign In dialog (mobile)
 - [ ] Make the ui to show item (books & podcast)
 - [ ] Set up database
 

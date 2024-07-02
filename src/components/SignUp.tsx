@@ -12,7 +12,6 @@ const SignUp = () => {
 					User Agreement and Privacy Policy.
 				</p>
 			</div>
-			<UserAuthForm />
 			<p className='px-8 text-center text-sm text-muted-foreground'>
 				New to Breaddit?{' '}
 				<Link

@@ -1,6 +1,6 @@
+import { signOut } from "next-auth/react";
 import {
 	AlertDialog,
-	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
@@ -10,6 +10,8 @@ import {
 	AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { useToast } from "./ui/use-toast";
 
 interface UserLogoutForm {
 	children: React.ReactNode;
@@ -17,6 +19,22 @@ interface UserLogoutForm {
 
 
 const UserLogoutForm: React.FC<UserLogoutForm> = ({ children }) => {
+	const { toast } = useToast();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const logout = async () => {
+		setIsLoading(true);
+		try {
+			await signOut({ callbackUrl: "http://localhost:3000/" })
+		} catch {
+			toast({
+				title: 'Error',
+				description: 'Failed using discord',
+				variant: 'destructive',
+			});
+		} finally {
+			setIsLoading(false);
+		}
+	}
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -31,7 +49,12 @@ const UserLogoutForm: React.FC<UserLogoutForm> = ({ children }) => {
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<Button>Logout</Button>
+					<Button
+						isLoading={isLoading}
+						type='button'
+						onClick={logout}
+						disabled={isLoading}
+					>Logout</Button>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>

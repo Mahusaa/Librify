@@ -6,21 +6,16 @@ import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem, DropdownMenuShortcut } from './ui/dropdown-menu';
 import { LogOut } from 'lucide-react';
 import UserLogoutForm from './UserLogoutForm';
+import { DialogSignIn } from './SignInDialog';
 
 const AvatarWrap: React.FC = () => {
-	const { data: session, status } = useSession();
+	const { data: session, } = useSession();
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-	if (status === 'loading') {
-		return (
-			<Avatar className="w-8 h-8">
-				<AvatarFallback>CN</AvatarFallback>
-			</Avatar>)
-	}
 
 	if (!session) {
 		return (
-			<Button>Sign In</Button>
+
+			<DialogSignIn><Button>Sign In</Button></DialogSignIn>
 		);
 	}
 
