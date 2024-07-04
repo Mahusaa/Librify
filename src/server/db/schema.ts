@@ -19,24 +19,6 @@ import { type AdapterAccount } from "next-auth/adapters";
  */
 export const createTable = pgTableCreator((name) => `librify_${name}`);
 
-export const posts = createTable(
-  "post",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdById: varchar("createdById", { length: 255 })
-      .notNull()
-      .references(() => users.id),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updatedAt", { withTimezone: true }),
-  },
-  (example) => ({
-    createdByIdIdx: index("createdById_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
 
 export const users = createTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey().default(sql`gen_random_uuid()`),
@@ -121,3 +103,50 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+// Books scheme
+
+export const book = createTable(
+  "books",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 255 }).notNull(),
+    image: varchar("image", { length: 255 }),
+    createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id)
+  }
+);
+
+export const chapter = createTable(
+  "chapters",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 255 }).notNull(),
+    content: text("content"),
+    bookId: serial("bookId").notNull().references(() => book.id),
+    createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updatedAt", { withTimezone: true }),
+  }
+)
+
+
+export const bookRelations = relations(book, ({ one, many }) => ({
+  createdBy: one(users, {
+    fields: [book.createdById],
+    references: [users.id],
+  }),
+  chapters: many(chapter),
+}));
+
+export const chapterRelations = relations(chapter, ({ one }) => ({
+  book: one(book, {
+    fields: [chapter.bookId],
+    references: [book.id],
+  }),
+  createdBy: one(users, {
+    fields: [chapter.createdById],
+    references: [users.id],
+  }),
+}));
+
