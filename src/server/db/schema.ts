@@ -108,10 +108,13 @@ export const verificationTokens = createTable(
 export const book = createTable(
   "books",
   {
-    id: serial("id").primaryKey(),
+    id: varchar("id", { length: 255 }).primaryKey().notNull(),
     title: varchar("title", { length: 255 }).notNull(),
     image: varchar("image", { length: 255 }),
-    createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id)
+    createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
   }
 );
 
@@ -121,7 +124,7 @@ export const chapter = createTable(
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 255 }).notNull(),
     content: text("content"),
-    bookId: serial("bookId").notNull().references(() => book.id),
+    bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -149,4 +152,3 @@ export const chapterRelations = relations(chapter, ({ one }) => ({
     references: [users.id],
   }),
 }));
-

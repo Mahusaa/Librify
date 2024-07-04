@@ -9,6 +9,14 @@ Librify is a personalized digital library where I curate and showcase my favorit
 - [x] Avatar with the menu 
 - [x] Sign In dialog (desktop)
 - [ ] Sign In dialog (mobile)
-- [ ] Make the ui to show item (books & podcast)
-- [ ] Set up database
+- [x] Create db schema
+- [ ] Implementing queries
+    -[x] get books by auth user
+    -[ ] get chapter by auth user & books
+- [ ] Make the ui to show item (books & podcast) (desktop)
+    -[x] Make a ui model for books
+    -[ ] Make a ui model for podcast
+- [ ] Make the ui to show item (books & podcast) (mobile)
+    -[ ] Make a ui model for books
+    -[ ] Make a ui model for podcast
 

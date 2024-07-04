@@ -44,10 +44,10 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session }) => ({
-      ...session,
-
-    }),
+    async session({ session, user }) {
+      session.user.id = user.id;
+      return session;
+    }
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
