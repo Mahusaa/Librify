@@ -36,9 +36,7 @@ const Header = () => {
 					</Link>
 				</div>
 
-				<div className="hidden md:block">
-					<AvatarWrap />
-				</div>
+				<AvatarWrap />
 			</div>
 		</div>
 	);
