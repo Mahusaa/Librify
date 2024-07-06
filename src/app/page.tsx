@@ -12,7 +12,7 @@ export default async function HomePage() {
       <span className="font-bold text-4xl">Home</span>
       <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
       <pre>{JSON.stringify(session?.user, null, 2)}</pre>
-      <Link href={`/books/${session?.user.id}`}>
+      <Link href={`/books/${session?.user.id}`} scroll={false}>
         <h1>click this</h1>
       </Link>
 
