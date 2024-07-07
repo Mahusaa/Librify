@@ -1,10 +1,7 @@
-
 import { cn } from "~/lib/utils";
 import Image from "next/image";
 import { Separator } from "~/components/ui/separator";
 import Link from "next/link";
-
-
 
 export default async function BookPage() {
   const albumsData = [
@@ -31,7 +28,8 @@ export default async function BookPage() {
       artist: "Beth Binary",
       cover:
         "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
-    },  // Add more albums as needed
+    },
+    // Add more albums as needed
   ];
 
   return (
@@ -45,9 +43,9 @@ export default async function BookPage() {
       <Separator className="my-4" />
       <div className="relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[...albumsData, ...albumsData].map((book) => (
-            <Link href="/2">
-              <div key={book.name} className={cn("space-y-3")}>
+          {albumsData.map((book, index) => (
+            <Link href={`/${index + 1}`} key={book.name}>
+              <div className={cn("space-y-3")}>
                 <div className="overflow-hidden rounded-md shadow-lg">
                   <Image
                     src={book.cover}
@@ -70,5 +68,6 @@ export default async function BookPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
+
