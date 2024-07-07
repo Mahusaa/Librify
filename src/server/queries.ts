@@ -15,3 +15,21 @@ export async function getMyBooks() {
   });
   return books;
 }
+
+export async function getMyBooksWithChapter({ bookId }: {
+  bookId: string;
+}) {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user.id;
+  if (!userId) return null;
+
+  const book = await db.query.book.findFirst({
+    where: (model, { eq }) => eq(model.createdById, userId) && eq(model.id, bookId),
+    with: {
+      chapters: {
+        orderBy: (model, { asc }) => asc(model.chapterId)
+      }
+    }
+  });
+  return book;
+}

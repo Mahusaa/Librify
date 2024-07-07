@@ -83,7 +83,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 						}`}
 				>
 					{item.icon}
-					<span className="font-semibold text-base flex">{item.title}</span>
+					<span className="font-semibold text-xl flex">{item.title}</span>
 				</Link>
 			)}
 		</div>
