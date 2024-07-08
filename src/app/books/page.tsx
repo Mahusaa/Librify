@@ -2,35 +2,10 @@ import { cn } from "~/lib/utils";
 import Image from "next/image";
 import { Separator } from "~/components/ui/separator";
 import Link from "next/link";
+import { getMyBooks } from "~/server/queries";
 
 export default async function BookPage() {
-  const albumsData = [
-    {
-      name: "React Rendezvous",
-      artist: "Ethan Byte",
-      cover:
-        "https://images.unsplash.com/photo-1629992101753-56d196c8aabb?q=80&w=1890&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "Async Awakenings",
-      artist: "Nina Netcode",
-      cover:
-        "https://images.unsplash.com/photo-1468817814611-b7edf94b5d60?w=300&dpr=2&q=80",
-    },
-    {
-      name: "The Art of Reusability",
-      artist: "Lena Logic",
-      cover:
-        "https://images.unsplash.com/photo-1528143358888-6d3c7f67bd5d?w=300&dpr=2&q=80",
-    },
-    {
-      name: "Stateful Symphony",
-      artist: "Beth Binary",
-      cover:
-        "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
-    },
-    // Add more albums as needed
-  ];
+  const books = await getMyBooks();
 
   return (
     <div className="p-6">
@@ -43,24 +18,32 @@ export default async function BookPage() {
       <Separator className="my-4" />
       <div className="relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {albumsData.map((book, index) => (
-            <Link href={`/${index + 1}`} key={book.name}>
+          {books.map((book, index) => (
+            <Link
+              href={`/books/${book.id}`}
+              key={index + 1}
+              scroll={false}
+            >
               <div className={cn("space-y-3")}>
                 <div className="overflow-hidden rounded-md shadow-lg">
-                  <Image
-                    src={book.cover}
-                    alt={book.artist}
-                    width={250}
-                    height={330}
-                    className={cn(
-                      "h-auto w-full object-cover transition-all hover:scale-105",
-                      "aspect-[3/4]"
-                    )}
-                  />
+                  {book.image ? (
+                    <Image
+                      src={book.image}
+                      alt={book.title}
+                      width={250}
+                      height={330}
+                      className={cn(
+                        "h-auto w-full object-cover transition-all hover:scale-105",
+                        "aspect-[3/4]"
+                      )}
+                    />
+                  ) : (
+                    "Book Image"
+                  )}
                 </div>
                 <div className="space-y-1 text-sm">
-                  <h3 className="font-medium leading-none">{book.name}</h3>
-                  <p className="text-xs text-muted-foreground">{book.artist}</p>
+                  <h3 className="font-medium leading-none">{book.title}</h3>
+                  <p className="text-xs text-muted-foreground">{book.author}</p>
                 </div>
               </div>
             </Link>

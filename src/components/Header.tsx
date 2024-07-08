@@ -5,24 +5,15 @@
 import React from 'react';
 
 import Link from 'next/link';
-import { useSelectedLayoutSegment } from 'next/navigation';
-
-import useScroll from '~/hooks/use-scroll';
 import { cn } from '~/lib/utils';
 import AvatarWrap from './AvatarWrap';
 
 const Header = () => {
-	const scrolled = useScroll(5);
-	const selectedLayout = useSelectedLayoutSegment();
 
 	return (
 		<div
 			className={cn(
-				`sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200`,
-				{
-					'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
-					'border-b border-gray-200 bg-white': selectedLayout,
-				},
+				`sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 bg-zinc-50`,
 			)}
 		>
 			<div className="flex h-[47px] items-center justify-between px-4">

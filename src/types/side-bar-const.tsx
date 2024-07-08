@@ -1,5 +1,5 @@
 
-import { House, BookOpen, Podcast, Settings } from 'lucide-react';
+import { House, BookOpen, Podcast, } from 'lucide-react';
 import { SideNavItem } from './SideNavItem';
 export const SIDENAV_ITEMS: SideNavItem[] = [
   {
@@ -13,8 +13,8 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <BookOpen className="w-6 h-6" />,
   },
   {
-    title: 'Settings',
-    path: '/settings',
-    icon: <Settings className="w-6 h-6" />,
+    title: 'Podcast',
+    path: '/podcast',
+    icon: <Podcast className="w-6 h-6" />,
   },
 ];

@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { type BookModalProps } from "~/types/BookModalProps";
+import type { BookModalProps } from "~/types/BookModalProps";
 import { useState } from "react";
 
 
