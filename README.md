@@ -4,19 +4,40 @@ Librify is a personalized digital library where I curate and showcase my favorit
 
 ## Check Box
 
+# Project Checklist
+
+## Deployment
 - [x] Make it deploy
-- [x] Scalfold the ui (navbar & sidebar)
+
+## UI Scaffolding
+- [x] Scaffold the UI (navbar & sidebar)
+
+## User Interface
 - [x] Avatar with the menu 
 - [x] Sign In dialog (desktop)
 - [ ] Sign In dialog (mobile)
-- [x] Create db schema
-- [ ] Implementing queries
-    -[x] get books by auth user
-    -[ ] get chapter by auth user & books
-- [ ] Make the ui to show item (books & podcast) (desktop)
-    -[x] Make a ui model for books
-    -[ ] Make a ui model for podcast
-- [ ] Make the ui to show item (books & podcast) (mobile)
-    -[ ] Make a ui model for books
-    -[ ] Make a ui model for podcast
 
+## Database
+- [x] Create DB schema
+
+## Queries Implementation
+- [x] Get books by authenticated user
+- [ ] Get chapters by authenticated user & books
+
+## UI Models (Desktop)
+- [ ] Make the UI to show items (books & podcasts)
+    - [x] Make a UI model for books
+    - [ ] Make a UI model for podcasts
+
+## UI Models (Mobile)
+- [ ] Make the UI to show items (books & podcasts)
+    - [ ] Make a UI model for books
+    - [ ] Make a UI model for podcasts
+
+## Additional Assignments
+- [ ] Add unit tests for queries
+- [ ] Implement error handling for database operations
+- [ ] Optimize UI for performance
+- [ ] Ensure responsive design across devices
+- [ ] Set up CI/CD pipeline for automatic deployment
+- [ ] Document API endpoints

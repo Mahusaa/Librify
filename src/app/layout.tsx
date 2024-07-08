@@ -33,7 +33,7 @@ export default function RootLayout({
               <MarginWidthWrapper>
                 <Header />
                 <HeaderMobile />
-                <PageWrapper>{children}</PageWrapper>
+                {children}
               </MarginWidthWrapper>
             </main>
           </div>
