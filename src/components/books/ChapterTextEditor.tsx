@@ -65,7 +65,7 @@ export function ChapterTextEditor({
 				</ResizablePanel>
 				<ResizableHandle withHandle className="bg-gray-200" />
 				<ResizablePanel defaultSize={defaultLayout[1]} minSize={40} className="bg-white">
-					<MailDisplay mail={mails.find((item) => item.id === mail.selected) || null} />
+					<MailDisplay mail={mails.find((item) => item.id === mail.selected) ?? null} />
 				</ResizablePanel>
 			</ResizablePanelGroup>
 		</TooltipProvider>
