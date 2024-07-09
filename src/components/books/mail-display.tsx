@@ -35,7 +35,6 @@ interface MailDisplayProps {
 	mail: Mail | null
 }
 
-// Utility functions to replace date-fns functions
 const format = (date: Date, formatString: string): string => {
 	const options: Intl.DateTimeFormatOptions = {};
 
@@ -61,67 +60,30 @@ const format = (date: Date, formatString: string): string => {
 
 
 export function MailDisplay({ mail }: MailDisplayProps) {
-
 	return (
-		<div className="flex h-[400px]flex-col">
+		<div className="flex flex-col h-full">
 			{mail ? (
-				<div className="flex flex-1 flex-col">
-					<div className="flex items-start p-4">
-						<div className="flex items-start gap-4 text-sm">
-							<Avatar>
-								<AvatarImage alt={mail.name} />
-								<AvatarFallback>
-									{mail.name
-										.split(" ")
-										.map((chunk: any) => chunk[0])
-										.join("")}
-								</AvatarFallback>
-							</Avatar>
-							<div className="grid gap-1">
-								<div className="font-semibold">{mail.name}</div>
-								<div className="line-clamp-1 text-xs">{mail.subject}</div>
-								<div className="line-clamp-1 text-xs">
-									<span className="font-medium">Reply-To:</span> {mail.email}
-								</div>
+				<div className="flex flex-col h-full">
+					<div className="flex items-center justify-between p-2 border-b">
+						<div className="flex items-center gap-2">
+							<div>
+								<div className="font-semibold text-sm">{mail.name}</div>
+								<div className="text-xs text-muted-foreground">{mail.email}</div>
 							</div>
 						</div>
 						{mail.date && (
-							<div className="ml-auto text-xs text-muted-foreground">
+							<div className="text-xs text-muted-foreground">
 								{format(new Date(mail.date), "PPpp")}
 							</div>
 						)}
 					</div>
-					<Separator />
-					<div className="flex-1 whitespace-pre-wrap p-4 text-sm">
+					<div className="p-2 text-sm font-medium">{mail.subject}</div>
+					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{mail.text}
-					</div>
-					<Separator className="mt-auto" />
-					<div className="p-4">
-						<form>
-							<div className="grid gap-4">
-
-								<div className="flex items-center">
-									<Label
-										htmlFor="mute"
-										className="flex items-center gap-2 text-xs font-normal"
-									>
-										Mute this
-										thread
-									</Label>
-									<Button
-										onClick={(e: any) => e.preventDefault()}
-										size="sm"
-										className="ml-auto"
-									>
-										Send
-									</Button>
-								</div>
-							</div>
-						</form>
 					</div>
 				</div>
 			) : (
-				<div className="p-8 text-center text-muted-foreground">
+				<div className="flex items-center justify-center h-full text-muted-foreground">
 					No message selected
 				</div>
 			)}

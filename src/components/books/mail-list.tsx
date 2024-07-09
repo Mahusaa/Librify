@@ -22,7 +22,6 @@ const formatDistanceToNow = (date: Date, options?: { addSuffix?: boolean }): str
 };
 
 import { cn } from "~/lib/utils"
-import { Badge } from "../ui/badge"
 import { ScrollArea } from "../ui/scroll-area"
 import { Mail } from "~/data/mail-data"
 import { useMail } from "~/hooks/use-mail"
@@ -55,9 +54,6 @@ export function MailList({ items }: MailListProps) {
 							<div className="flex items-center">
 								<div className="flex items-center gap-2">
 									<div className="font-semibold">{item.name}</div>
-									{!item.read && (
-										<span className="flex h-2 w-2 rounded-full bg-blue-600" />
-									)}
 								</div>
 								<div
 									className={cn(
@@ -77,15 +73,6 @@ export function MailList({ items }: MailListProps) {
 						<div className="line-clamp-2 text-xs text-muted-foreground">
 							{item.text.substring(0, 300)}
 						</div>
-						{item.labels.length ? (
-							<div className="flex items-center gap-2">
-								{item.labels.map((label) => (
-									<Badge key={label} variant={getBadgeVariantFromLabel(label)}>
-										{label}
-									</Badge>
-								))}
-							</div>
-						) : null}
 					</button>
 				))}
 			</div>
@@ -93,16 +80,3 @@ export function MailList({ items }: MailListProps) {
 	)
 }
 
-function getBadgeVariantFromLabel(
-	label: string
-): ComponentProps<typeof Badge>["variant"] {
-	if (["work"].includes(label.toLowerCase())) {
-		return "default"
-	}
-
-	if (["personal"].includes(label.toLowerCase())) {
-		return "outline"
-	}
-
-	return "secondary"
-}
