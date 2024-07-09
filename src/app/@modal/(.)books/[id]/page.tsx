@@ -20,7 +20,7 @@ const Page = async ({
               <CloseModal />
             </div>
             {book ? (
-              <BookModal book={book} />
+              <BookModal bookWithChapters={book} />
             ) : (
               <div>Loading...</div>
             )}
