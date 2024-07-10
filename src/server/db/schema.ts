@@ -129,7 +129,7 @@ export const chapter = createTable(
     bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     updatedAt: timestamp("updatedAt", { withTimezone: true }),
-    chapterId: integer("chapterId"),
+    chapterId: integer("chapterId").notNull(),
   }
 )
 

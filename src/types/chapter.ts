@@ -5,6 +5,6 @@ export interface Chapter {
   bookId: string;
   createdById: string;
   updatedAt: Date | null;
-  chapterId: number | null;
+  chapterId: number;
 }
 
