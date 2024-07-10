@@ -4,10 +4,11 @@ import type { Mail } from "~/data/mail-data"
 import { useMail } from "~/hooks/use-mail"
 import { TooltipProvider } from "../ui/tooltip"
 import { ResizablePanel, ResizablePanelGroup, ResizableHandle } from "../ui/resizable"
-import { Search } from "lucide-react"
+import { Search, CirclePlus } from "lucide-react"
 import { Input } from "../ui/input"
 import { MailDisplay } from "./mail-display"
 import { MailList } from "./mail-list"
+import { Button } from "../ui/button"
 
 
 
@@ -50,16 +51,18 @@ export function ChapterTextEditor({
 				className="h-full items-stretch bg-gray-50"
 			>
 				<ResizablePanel defaultSize={defaultLayout[0]} minSize={30} className="bg-white border-r border-gray-200">
-					<div className="flex items-center justify-between p-3 bg-gray-50 border-b border-gray-200">
-						<div className="relative w-full ml-2">
-							<Search className="absolute left-2 top-2 h-4 w-4 text-gray-400" />
-							<Input placeholder="Search Chapter" className="pl-8 h-8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-						</div>
-					</div>
-					<div className="overflow-y-auto flex justify-center items-center">
-						<BookInfo />
-					</div>
+
 					<div className="overflow-y-auto">
+						<BookInfo />
+						<div className="flex items-center justify-between p-3">
+							<div className="flex flex-row items-center justify-between p-3  border-b border-gray-100 gap-2">
+								<div className="relative w-2/3 ml-2">
+									<Search className="absolute left-2 top-2 h-4 w-4 text-gray-400" />
+									<Input placeholder="Search Chapter" className="pl-8 h-9 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+								</div>
+								<Button className="w-1/3" variant="outline"><CirclePlus className="w-4 h-4 mr-1" />New</Button>
+							</div>
+						</div>
 						<MailList items={mails} />
 					</div>
 				</ResizablePanel>

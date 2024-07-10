@@ -1,4 +1,3 @@
-import { cookies } from "next/headers"
 import { ChapterTextEditor } from "~/components/books/ChapterTextEditor"
 import { mails } from "~/data/mail-data"
 
