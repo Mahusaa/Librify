@@ -1,8 +1,15 @@
 import { ChapterTextEditor } from "~/components/books/ChapterTextEditor"
 import { mails } from "~/data/mail-data"
+import { getMyBooksWithChapter } from "~/server/queries";
 
 
-export default function ChapterPage() {
+export default async function ChapterPage({
+  params: { bookId: bookId },
+}: {
+  params: { bookId: string },
+}) {
+  const bookWithChapters = await getMyBooksWithChapter({ bookId })
+  console.log(bookWithChapters)
   let defaultLayout;
   return (
     <>

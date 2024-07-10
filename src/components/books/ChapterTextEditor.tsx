@@ -2,6 +2,7 @@
 import * as React from "react"
 import type { Mail } from "~/data/mail-data"
 import { useMail } from "~/hooks/use-mail"
+import BookDisplay from "./BookDisplay"
 import { TooltipProvider } from "../ui/tooltip"
 import { ResizablePanel, ResizablePanelGroup, ResizableHandle } from "../ui/resizable"
 import { Search, CirclePlus } from "lucide-react"
@@ -17,24 +18,6 @@ interface ChapterTextEditor {
 	mails: Mail[]
 	defaultLayout: number[] | undefined
 }
-
-
-
-const BookInfo: React.FC = () => {
-	const title = "The Great Gatsby";
-	const author = "F. Scott Fitzgerald";
-	const imageUrl = "https://images.unsplash.com/photo-1629992101753-56d196c8aabb?q=80&w=1890&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-
-	return (
-		<div className="p-4  border-b border-gray-200 flex items-center">
-			<img src={imageUrl} alt={`${title} cover`} className="w-12 h-16 mr-4 object-cover rounded" />
-			<div>
-				<h2 className="text-xl font-semibold text-gray-800">{title}</h2>
-				<p className="text-sm text-gray-600">by {author}</p>
-			</div>
-		</div>
-	);
-};
 
 export function ChapterTextEditor({
 	mails,
@@ -53,7 +36,7 @@ export function ChapterTextEditor({
 				<ResizablePanel defaultSize={defaultLayout[0]} minSize={30} className="bg-white border-r border-gray-200">
 
 					<div className="overflow-y-auto">
-						<BookInfo />
+						<BookDisplay />
 						<div className="flex items-center justify-between p-3">
 							<div className="flex flex-row items-center justify-between p-3  border-b border-gray-100 gap-2">
 								<div className="relative w-2/3 ml-2">
