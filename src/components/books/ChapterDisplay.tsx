@@ -1,31 +1,10 @@
 import { Chapter } from "~/types/chapter";
+import dateFormatting from "~/lib/date-formatting";
 
 interface ChapterDisplayProps {
 	chapter: Chapter | null;
 }
 
-const format = (date: Date, formatString: string): string => {
-	const options: Intl.DateTimeFormatOptions = {};
-
-	switch (formatString) {
-		case "E, h:m b":
-			options.weekday = "short";
-			options.hour = "numeric";
-			options.minute = "numeric";
-			break;
-		case "PPpp":
-			options.year = "numeric";
-			options.month = "short";
-			options.day = "numeric";
-			options.hour = "numeric";
-			options.minute = "numeric";
-			break;
-		default:
-			break;
-	}
-
-	return new Intl.DateTimeFormat('en-US', options).format(date);
-};
 
 
 const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
@@ -41,7 +20,7 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 						</div>
 						{chapter.updatedAt && (
 							<div className="text-xs text-muted-foreground">
-								{format(new Date(chapter.updatedAt), "PPpp")}
+								{dateFormatting(new Date(chapter.updatedAt), "PPpp")}
 							</div>
 						)}
 					</div>
