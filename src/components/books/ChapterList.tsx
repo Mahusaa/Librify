@@ -63,9 +63,9 @@ const ChapterList: React.FC<ChapterListProps> = ({
 												: "text-muted-foreground"
 										)}
 									>
-										{/*formatDistanceToNow(new Date(item.updatedAt), {
+										{formatDistanceToNow(new Date(item.updatedAt ?? Date.now()), {
 											addSuffix: true,
-										})*/}
+										})}
 									</div>
 								</div>
 								<div className="text-xs font-medium">{item.title}</div>

@@ -39,11 +39,11 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 								<div className="font-semibold text-sm">{`Chapter ${chapter.chapterId}`}</div>
 							</div>
 						</div>
-						{/*chapter.date && (
+						{chapter.updatedAt && (
 							<div className="text-xs text-muted-foreground">
-								{format(new Date(chapter.date), "PPpp")}
+								{format(new Date(chapter.updatedAt), "PPpp")}
 							</div>
-						)*/}
+						)}
 					</div>
 					<div className="p-2 text-sm font-medium">{chapter.title}</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
