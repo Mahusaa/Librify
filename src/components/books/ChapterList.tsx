@@ -1,4 +1,3 @@
-import { ComponentProps } from "react"
 const formatDistanceToNow = (date: Date, options?: { addSuffix?: boolean }): string => {
 	const now = new Date();
 	const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -23,16 +22,19 @@ const formatDistanceToNow = (date: Date, options?: { addSuffix?: boolean }): str
 
 import { cn } from "~/lib/utils"
 import { ScrollArea } from "../ui/scroll-area"
-import { Mail } from "~/data/mail-data"
-import { useMail } from "~/hooks/use-mail"
-import { Button } from "../ui/button";
+import type { Chapter } from "~/types/chapter";
 
-interface MailListProps {
-	items: Mail[]
+interface ChapterListProps {
+	items: Chapter[]
+	selectedChapterId: number | null;
+	onSelect: (id: number) => void;
 }
 
-export function MailList({ items }: MailListProps) {
-	const [mail, setMail] = useMail()
+const ChapterList: React.FC<ChapterListProps> = ({
+	items,
+	selectedChapterId,
+	onSelect,
+}) => {
 
 	return (
 		<>
@@ -43,37 +45,33 @@ export function MailList({ items }: MailListProps) {
 							key={item.id}
 							className={cn(
 								"flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-								mail.selected === item.id && "bg-muted"
+								selectedChapterId === item.chapterId && "bg-muted"
 							)}
-							onClick={() =>
-								setMail({
-									...mail,
-									selected: item.id,
-								})
+							onClick={() => onSelect(item.chapterId)
 							}
 						>
 							<div className="flex w-full flex-col gap-1">
 								<div className="flex items-center">
 									<div className="flex items-center gap-2">
-										<div className="font-semibold">{item.name}</div>
+										<div className="font-semibold">{`Chapter ${item.chapterId}`}</div>
 									</div>
 									<div
 										className={cn(
 											"ml-auto text-xs",
-											mail.selected === item.id
+											selectedChapterId === item.chapterId
 												? "text-foreground"
 												: "text-muted-foreground"
 										)}
 									>
-										{formatDistanceToNow(new Date(item.date), {
+										{/*formatDistanceToNow(new Date(item.updatedAt), {
 											addSuffix: true,
-										})}
+										})*/}
 									</div>
 								</div>
-								<div className="text-xs font-medium">{item.subject}</div>
+								<div className="text-xs font-medium">{item.title}</div>
 							</div>
 							<div className="line-clamp-2 text-xs text-muted-foreground">
-								{item.text.substring(0, 300)}
+								{item.content ? item.content.substring(0, 300) : null}
 							</div>
 						</button>
 					))}
@@ -83,3 +81,5 @@ export function MailList({ items }: MailListProps) {
 	)
 }
 
+
+export default ChapterList;
