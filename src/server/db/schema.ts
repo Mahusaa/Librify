@@ -5,7 +5,6 @@ import {
   jsonb,
   pgTableCreator,
   primaryKey,
-  serial,
   text,
   timestamp,
   varchar,
@@ -124,7 +123,8 @@ export const book = createTable(
 export const chapter = createTable(
   "chapters",
   {
-    id: serial("id").primaryKey(),
+    id: varchar("userId", { length: 255 })
+      .notNull().primaryKey(),
     title: varchar("title", { length: 255 }).notNull(),
     content: jsonb("content"),
     bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
