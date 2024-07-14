@@ -1,6 +1,7 @@
 import { Chapter } from "~/types/chapter";
 import dateFormatting from "~/lib/date-formatting";
 import TailwindEditor from "./ContentEditor";
+import ContentEditor from "./ContentEditor";
 
 interface ChapterDisplayProps {
 	chapter: Chapter | null;
@@ -27,7 +28,7 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 					<div className="p-2 text-lg font-medium">{chapter.title}</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{/*chapter.content*/}
-						<TailwindEditor />
+						<ContentEditor />
 					</div>
 				</div>
 			) : (
