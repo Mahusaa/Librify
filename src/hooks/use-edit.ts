@@ -8,6 +8,6 @@ interface EditToggle {
 
 
 export const useEdit = create<EditToggle>((set) => ({
-  isEdit: false,
+  isEdit: true,
   edit: () => set((state) => ({ isEdit: !state.isEdit })),
 }))

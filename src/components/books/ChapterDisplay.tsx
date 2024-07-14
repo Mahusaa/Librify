@@ -1,6 +1,5 @@
 import { Chapter } from "~/types/chapter";
 import dateFormatting from "~/lib/date-formatting";
-import TailwindEditor from "./ContentEditor";
 import ContentEditor from "./ContentEditor";
 
 interface ChapterDisplayProps {
@@ -16,7 +15,7 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 					<div className="flex items-center justify-between p-2 border-b">
 						<div className="flex items-center gap-2">
 							<div>
-								<div className="font-semibold text-lg">{`Chapter ${chapter.chapterId}`}</div>
+								<div className="font-semibold text-lg">{`Chapter ${chapter.chapterId}: ${chapter.title}`}</div>
 							</div>
 						</div>
 						{chapter.updatedAt && (
@@ -25,10 +24,9 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 							</div>
 						)}
 					</div>
-					<div className="p-2 text-lg font-medium">{chapter.title}</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{/*chapter.content*/}
-						<ContentEditor />
+						<ContentEditor editable={true} initialContent={chapter.content} />
 					</div>
 				</div>
 			) : (

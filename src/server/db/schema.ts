@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import {
   index,
   integer,
+  jsonb,
   pgTableCreator,
   primaryKey,
   serial,
@@ -125,7 +126,7 @@ export const chapter = createTable(
   {
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 255 }).notNull(),
-    content: text("content"),
+    content: jsonb("content"),
     bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     updatedAt: timestamp("updatedAt", { withTimezone: true })
