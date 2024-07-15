@@ -51,13 +51,6 @@ const ChapterList: React.FC<ChapterListProps> = ({
 								<div className="text-xs font-medium">{item.title}</div>
 							</div>
 							<div className="line-clamp-2 text-xs text-muted-foreground">
-								{item.content && (
-									<div>
-										{item.content.map((contentItem: any, index: number) => (
-											<p key={index}>{contentItem.content}</p>
-										))}
-									</div>
-								)}
 							</div>
 						</button>
 					))}

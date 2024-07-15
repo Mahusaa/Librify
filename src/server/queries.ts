@@ -2,6 +2,8 @@ import "server-only"
 import { authOptions } from "./auth"
 import { getServerSession } from "next-auth"
 import { db } from "./db";
+import { chapter } from "./db/schema";
+import { eq } from "drizzle-orm";
 
 
 export async function getMyBooks() {
@@ -32,4 +34,16 @@ export async function getMyBooksWithChapter({ bookId }: {
     }
   });
   return book;
+}
+
+export async function updateContent({
+  chapterId,
+  content,
+}: {
+  chapterId: string;
+  content: string;
+}): Promise<void | null> {
+  await db.update(chapter)
+    .set({ content })
+    .where(eq(chapter.id, chapterId))
 }

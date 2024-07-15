@@ -1,8 +1,8 @@
-import type { PartialBlock } from "@blocknote/core";
+
 export interface Chapter {
-  id: number;
+  id: string;
   title: string;
-  content: PartialBlock[];
+  content: string | null;
   bookId: string;
   createdById: string;
   updatedAt: Date | null;

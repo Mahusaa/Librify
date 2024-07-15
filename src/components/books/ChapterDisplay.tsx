@@ -1,6 +1,7 @@
 import { Chapter } from "~/types/chapter";
 import dateFormatting from "~/lib/date-formatting";
 import ContentEditor from "./ContentEditor";
+import { useSaving } from "~/hooks/use-saving";
 
 interface ChapterDisplayProps {
 	chapter: Chapter | null;
@@ -8,6 +9,7 @@ interface ChapterDisplayProps {
 
 
 const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
+	const { isSaving } = useSaving();
 	return (
 		<div className="flex flex-col h-full">
 			{chapter ? (
@@ -19,14 +21,17 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 							</div>
 						</div>
 						{chapter.updatedAt && (
-							<div className="text-xs text-muted-foreground">
-								{dateFormatting(new Date(chapter.updatedAt), "PPpp")}
+							<div>
+								<span>{isSaving ? "saving" : "last update"}</span>
+								<div className="text-xs text-muted-foreground">
+									{dateFormatting(new Date(chapter.updatedAt), "PPpp")}
+								</div>
 							</div>
 						)}
 					</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{/*chapter.content*/}
-						<ContentEditor editable={true} initialContent={chapter.content} />
+						<ContentEditor editable={true} initialContent={chapter.content} chapterId={chapter.id} />
 					</div>
 				</div>
 			) : (

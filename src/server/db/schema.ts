@@ -2,7 +2,6 @@ import { relations, sql } from "drizzle-orm";
 import {
   index,
   integer,
-  jsonb,
   pgTableCreator,
   primaryKey,
   text,
@@ -10,6 +9,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
+import type { PartialBlock } from "@blocknote/core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -126,7 +126,7 @@ export const chapter = createTable(
     id: varchar("userId", { length: 255 })
       .notNull().primaryKey(),
     title: varchar("title", { length: 255 }).notNull(),
-    content: jsonb("content"),
+    content: text("content"),
     bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     updatedAt: timestamp("updatedAt", { withTimezone: true })
