@@ -8,6 +8,7 @@ import type { PartialBlock } from "@blocknote/core";
 import { useSaving } from "~/hooks/use-saving";
 import { useEffect, useState } from "react";
 import { useDebounce } from "~/hooks/use-debounce";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ContentEditorProps {
 	chapterId: string;
@@ -31,7 +32,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 				headers: {
 					"Content-Type": "application.json",
 				},
-				body: JSON.stringify({ chapterId, bookId, debounceSave }),
+				body: JSON.stringify({ chapterId, bookId, content: debounceSave }),
 				next: { revalidate: 1 }
 			},)
 			setIsSaving(false);
@@ -40,15 +41,18 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 	}, [debounceSave])
 
 	return (
-		<>
-			<BlockNoteView
-				editor={editor}
-				theme="light"
-				onChange={() => {
-					setDocument(JSON.stringify(editor.document))
-				}}
-			/>
-		</>
+		<ScrollArea className="h-screen overflow-hidden">
+			<div className="w-full h-full overflow-hidden">
+				<BlockNoteView
+					editor={editor}
+					theme="light"
+					className="break-words break-all whitespace-pre-wrap w-full h-full"
+					onChange={() => {
+						setDocument(JSON.stringify(editor.document));
+					}}
+				/>
+			</div>
+		</ScrollArea>
 	);
 };
 

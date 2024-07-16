@@ -1,15 +1,15 @@
-"use client"
-
-
-
-import React from 'react';
 
 import Link from 'next/link';
 import { cn } from '~/lib/utils';
 import AvatarWrap from './AvatarWrap';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '~/server/auth';
+import { DialogSignIn } from './SignInDialog';
+import { Button } from './ui/button';
 
-const Header = () => {
-
+const Header = async () => {
+	const session = await getServerSession(authOptions);
+	console.log(session)
 	return (
 		<div
 			className={cn(
@@ -27,10 +27,13 @@ const Header = () => {
 					</Link>
 				</div>
 
-				<AvatarWrap />
+				{session ? (
+					<AvatarWrap session={session} />
+				) : (
+					<DialogSignIn><Button>Sign In</Button></DialogSignIn>
+				)}
 			</div>
-		</div>
-	);
+		</div>);
 };
 
 export default Header;

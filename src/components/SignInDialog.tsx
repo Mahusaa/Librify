@@ -1,3 +1,4 @@
+"use client"
 import { cn } from "~/lib/utils"
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogDescription, DialogTitle, DialogFooter } from "./ui/dialog"
 import { Button } from "./ui/button"

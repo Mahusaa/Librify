@@ -16,6 +16,7 @@ export async function POST(req: Request) {
   const { chapterId, content, bookId }: RequestBody = await req.json() as RequestBody;
   const currentTimestamp = new Date();
   const path = `/books/${bookId}`
+  await new Promise(resolve => setTimeout(resolve, 200));
   await db.update(chapter)
     .set({
       content,

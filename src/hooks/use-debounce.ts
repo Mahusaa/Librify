@@ -8,5 +8,6 @@ export const useDebounce = <T>(value: T, delay = 1200) => {
     }, delay)
     return () => clearTimeout(timeout);
   }, [value, delay])
+  console.log(debouncedValue);
   return debouncedValue;
 }
