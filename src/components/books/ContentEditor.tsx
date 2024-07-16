@@ -6,47 +6,46 @@ import "@blocknote/mantine/style.css";
 import { BlockNoteEditor } from "@blocknote/core";
 import type { PartialBlock } from "@blocknote/core";
 import { useSaving } from "~/hooks/use-saving";
-import { debounce } from "~/lib/debounce-saving";
-import { db } from "~/server/db";
-import { chapter } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
-import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { useDebounce } from "~/hooks/use-debounce";
 
 interface ContentEditorProps {
 	chapterId: string;
 	initialContent: string | null;
-	editable?: boolean;
+	bookId: string;
 }
 
-const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, editable, chapterId }) => {
+const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId, bookId }) => {
+	const [document, setDocument] = useState(initialContent)
+	const debounceSave = useDebounce(document)
 	const { setIsSaving } = useSaving();
 	const editor: BlockNoteEditor = useCreateBlockNote({
 		initialContent: initialContent ? JSON.parse(initialContent) as PartialBlock[] : undefined,
 	});
 
-	const handleSaveContent = async (chapterId: string, content: string) => {
-		try {
+	useEffect(() => {
+		const handleSaveContent = async () => {
+			setIsSaving(true);
 			await fetch("/api/save-content", {
 				method: 'POST',
 				headers: {
 					"Content-Type": "application.json",
 				},
-				body: JSON.stringify({ chapterId, content })
-			})
-		} catch (error) {
-			console.error("Error saving content:", error);
-		} finally {
+				body: JSON.stringify({ chapterId, bookId, debounceSave }),
+				next: { revalidate: 1 }
+			},)
+			setIsSaving(false);
+		};
+		handleSaveContent();
+	}, [debounceSave])
 
-		}
-	};
-	const debounceSave = debounce(handleSaveContent, 800, setIsSaving)
 	return (
 		<>
 			<BlockNoteView
 				editor={editor}
 				theme="light"
 				onChange={() => {
-					debounceSave(chapterId, JSON.stringify(editor.document))
+					setDocument(JSON.stringify(editor.document))
 				}}
 			/>
 		</>

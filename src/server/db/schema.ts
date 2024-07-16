@@ -130,7 +130,7 @@ export const chapter = createTable(
     bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     updatedAt: timestamp("updatedAt", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
+      .default(sql`CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP`)
       .notNull(),
     chapterId: integer("chapterId").notNull(),
   }
