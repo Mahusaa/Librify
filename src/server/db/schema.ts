@@ -9,7 +9,6 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
-import type { PartialBlock } from "@blocknote/core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same

@@ -10,6 +10,7 @@ import { Search, CirclePlus } from "lucide-react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import ChapterDisplay from "./ChapterDisplay"
+import { NewChapterDialog } from "../NewChapterDialog"
 
 
 interface ChapterTextEditorProps {
@@ -43,7 +44,9 @@ export function ChapterTextEditor({
 									<Search className="absolute left-2 top-2 h-4 w-4 text-gray-400" />
 									<Input placeholder="Search Chapter" className="pl-8 h-9 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
 								</div>
-								<Button className="flex-none" variant="outline"><CirclePlus className="w-4 h-4 mr-1" />New</Button>
+								<NewChapterDialog createById={book.createdById} bookId={book.id} chapterNow={book.chapters.length}>
+									<Button className="flex-none" variant="outline"><CirclePlus className="w-4 h-4 mr-1" />New</Button>
+								</NewChapterDialog>
 							</div>
 						</div>
 						<ChapterList items={book.chapters} selectedChapterId={selected} onSelect={setSelected} />
