@@ -10,7 +10,6 @@ export async function createChapter(FormData: FormData) {
   const createdById = FormData.get("createById") as string
   const bookId = FormData.get("bookId") as string;
   const chapterId = parseInt(FormData.get("chapterId") as string, 10);
-  console.log(chapterId)
   await db.insert(chapter).values({
     id: sql`gen_random_uuid()`,
     title,

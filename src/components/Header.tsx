@@ -9,7 +9,6 @@ import { Button } from './ui/button';
 
 const Header = async () => {
 	const session = await getServerSession(authOptions);
-	console.log(session)
 	return (
 		<div
 			className={cn(

@@ -17,12 +17,12 @@ interface ContentEditorProps {
 }
 
 const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId, bookId }) => {
-	const [document, setDocument] = useState(initialContent)
+	const [document, setDocument] = useState(initialContent);
 	const debounceSave = useDebounce(document)
 	const { setIsSaving } = useSaving();
 	const editor: BlockNoteEditor = useCreateBlockNote({
 		initialContent: initialContent ? JSON.parse(initialContent) as PartialBlock[] : undefined,
-	});
+	}, [chapterId, initialContent]);
 
 	useEffect(() => {
 		const handleSaveContent = async () => {

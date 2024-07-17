@@ -1,6 +1,11 @@
 import { ChapterTextEditor } from "~/components/books/ChapterTextEditor"
 import { getMyBooksWithChapter } from "~/server/queries";
 
+
+
+
+export const dynamic = "force-dynamic"
+
 export default async function ChapterPage({
   params: { bookId: bookId },
 }: {

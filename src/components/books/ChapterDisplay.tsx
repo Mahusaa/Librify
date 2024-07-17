@@ -41,7 +41,10 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 					</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{/*chapter.content*/}
-						<ContentEditor initialContent={chapter.content} chapterId={chapter.id} bookId={chapter.bookId} />
+						<ContentEditor
+							initialContent={chapter.content}
+							chapterId={chapter.id}
+							bookId={chapter.bookId} />
 					</div>
 				</div>
 			) : (
