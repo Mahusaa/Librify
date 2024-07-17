@@ -51,7 +51,7 @@ export function NewChapterDialog({
 				<DialogHeader>
 					<DialogTitle>Add New Chapter</DialogTitle>
 					<DialogDescription>
-						Are you sure to make a new chapter? Click Add New Chapter when you're done.
+						Are you sure to make a new chapter? Click Add New Chapter when your&apose done.
 					</DialogDescription>
 				</DialogHeader>
 				<NewChapterForm

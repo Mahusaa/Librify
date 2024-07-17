@@ -27,18 +27,24 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 	useEffect(() => {
 		const handleSaveContent = async () => {
 			setIsSaving(true);
-			await fetch("/api/save-content", {
-				method: 'POST',
-				headers: {
-					"Content-Type": "application.json",
-				},
-				body: JSON.stringify({ chapterId, bookId, content: debounceSave }),
-				next: { revalidate: 1 }
-			},)
-			setIsSaving(false);
+			try {
+				await fetch("/api/save-content", {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ chapterId, bookId, content: debounceSave }),
+					next: { revalidate: 1 },
+				});
+			} catch {
+				console.log("error saving");
+			} finally {
+				setIsSaving(false);
+			}
 		};
-		handleSaveContent();
-	}, [debounceSave])
+		void handleSaveContent();
+	}, [debounceSave]);
+
 
 	return (
 		<ScrollArea className="h-screen overflow-hidden">
