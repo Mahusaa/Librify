@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
 import { DialogSignIn } from './SignInDialog';
 import { Button } from './ui/button';
+import Image from 'next/image';
 
 const Header = async () => {
 	const session = await getServerSession(authOptions);
@@ -21,7 +22,6 @@ const Header = async () => {
 						href="/"
 						className="flex flex-row space-x-3 items-center justify-center md:hidden"
 					>
-						<span className="h-7 w-7 bg-zinc-300 rounded-lg" />
 						<span className="font-bold text-xl flex ">Librify</span>
 					</Link>
 				</div>

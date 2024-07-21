@@ -2,7 +2,6 @@ import "~/styles/globals.css";
 
 import { Inter } from 'next/font/google';
 import Header from "~/components/Header";
-import PageWrapper from "~/components/PageWrapper";
 import MarginWidthWrapper from "~/components/MarginWidthWrapper";
 import HeaderMobile from "~/components/HeaderMobile";
 import SideBar from "~/components/sidebar";
@@ -10,7 +9,7 @@ import Providers from "~/components/Providers";
 export const metadata = {
   title: "Librify",
   description: "This is my app",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/librify.ico" }],
 };
 
 const inter = Inter({ subsets: ['latin'] });
@@ -18,10 +17,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
-  modal,
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }) {
   return (
     <html lang="en" className={`${inter.className}`}>
@@ -38,8 +35,6 @@ export default function RootLayout({
             </main>
           </div>
         </Providers>
-        {modal}
-        <div id="modal-root" />
       </body>
 
     </html>

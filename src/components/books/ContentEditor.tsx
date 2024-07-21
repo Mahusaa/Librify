@@ -17,12 +17,15 @@ interface ContentEditorProps {
 }
 
 const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId, bookId }) => {
-	const [document, setDocument] = useState(initialContent);
-	const debounceSave = useDebounce(document)
+	const [content, setContent] = useState("");
+	const debounceSave = useDebounce(content)
 	const { setIsSaving } = useSaving();
 	const editor: BlockNoteEditor = useCreateBlockNote({
 		initialContent: initialContent ? JSON.parse(initialContent) as PartialBlock[] : undefined,
 	}, [chapterId, initialContent]);
+	useEffect(() => {
+		setContent("")
+	}, [chapterId])
 
 	useEffect(() => {
 		const handleSaveContent = async () => {
@@ -42,6 +45,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 				setIsSaving(false);
 			}
 		};
+		if (debounceSave !== "") {
+			void handleSaveContent();
+		}
 		void handleSaveContent();
 	}, [debounceSave]);
 
@@ -52,9 +58,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 				<BlockNoteView
 					editor={editor}
 					theme="light"
-					className="break-words break-all whitespace-pre-wrap w-full h-full"
+					className="break-words  whitespace-pre-wrap w-full h-full"
 					onChange={() => {
-						setDocument(JSON.stringify(editor.document));
+						setContent(JSON.stringify(editor.document));
 					}}
 				/>
 			</div>

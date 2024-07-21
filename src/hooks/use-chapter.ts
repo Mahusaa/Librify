@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
 interface ChapterSelected {
-  selected: number | null;
+  selected: number;
   setSelected: (selected: number) => void;
 }
 
 export const useChapter = create<ChapterSelected>((set) => ({
-  selected: null,
+  selected: 1,
   setSelected: (selected) => set({ selected }),
 }));
 
