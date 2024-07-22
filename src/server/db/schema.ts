@@ -109,9 +109,10 @@ export const book = createTable(
   {
     id: varchar("id", { length: 255 }).primaryKey().notNull(),
     title: varchar("title", { length: 255 }).notNull(),
-    image: varchar("image", { length: 255 }),
+    imageUrl: varchar("image", { length: 255 }),
     year: integer("year"),
     author: varchar("author", { length: 255 }),
+    description: text("description"),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -129,7 +130,7 @@ export const chapter = createTable(
     bookId: varchar("bookId", { length: 255 }).notNull().references(() => book.id),
     createdById: varchar("createdById", { length: 255 }).notNull().references(() => users.id),
     updatedAt: timestamp("updatedAt", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP`)
+      .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     chapterId: integer("chapterId").notNull(),
   }

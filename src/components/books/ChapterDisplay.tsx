@@ -4,7 +4,7 @@ import dateFormatting from "~/lib/date-formatting";
 import ContentEditor from "./ContentEditor";
 import { useSaving } from "~/hooks/use-saving";
 import { Loader } from "lucide-react";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ChapterDisplayProps {
 	chapter: Chapter | null;
