@@ -3,6 +3,7 @@ import { cn } from "~/lib/utils"
 import formatDateDistanceToNow from "~/lib/date-to-now";
 import { ScrollArea } from "../ui/scroll-area"
 import type { Chapter } from "~/types/chapter";
+import type { Paragraph } from "~/types/content-types";
 
 interface ChapterListProps {
 	items: Chapter[]
@@ -10,12 +11,27 @@ interface ChapterListProps {
 	onSelect: (id: number) => void;
 }
 
+
+
+
+
 const ChapterList: React.FC<ChapterListProps> = ({
 	items,
 	selectedChapterId,
 	onSelect,
 }) => {
 
+	function getFirstParagraph(data: string): string | null {
+		const dataJson: Paragraph[] = JSON.parse(data);
+
+		const firstParagraph = dataJson.find((item) => item ? item.type === 'paragraph' : null);
+
+		if (firstParagraph && firstParagraph.content.length > 0) {
+			return firstParagraph.content.map((contentItem) => contentItem.text).join(' ');
+		}
+
+		return null;
+	}
 	return (
 		<>
 			<ScrollArea className="h-[400px]">
@@ -51,7 +67,12 @@ const ChapterList: React.FC<ChapterListProps> = ({
 								<div className="text-xs font-medium">{item.title}</div>
 							</div>
 							<div className="line-clamp-2 text-xs text-muted-foreground">
-								{/*item.content ? item.content.substring(0, 300) : null*/}
+								{item.content ?
+									(() => {
+										const firstParagraph = getFirstParagraph(item.content);
+										return firstParagraph ? firstParagraph.substring(0, 300) : null;
+									})()
+									: null}
 							</div>
 						</button>
 					))}
