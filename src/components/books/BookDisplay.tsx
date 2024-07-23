@@ -9,7 +9,7 @@ const BookDisplay: React.FC<BookDisplayProps> = ({ book }) => {
 
 	return (
 		<div className="p-4  border-b border-gray-200 flex items-center">
-			{book.image ? (<img src={book.image} alt={`${book.title} cover`} className="w-12 h-16 mr-4 object-cover rounded" />) : (
+			{book.imageUrl ? (<img src={book.imageUrl} alt={`${book.title} cover`} className="w-12 h-16 mr-4 object-cover rounded" />) : (
 				<h1>No content</h1>
 			)}
 			<div>

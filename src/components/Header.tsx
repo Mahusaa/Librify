@@ -6,7 +6,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
 import { DialogSignIn } from './SignInDialog';
 import { Button } from './ui/button';
-import Image from 'next/image';
 
 const Header = async () => {
 	const session = await getServerSession(authOptions);

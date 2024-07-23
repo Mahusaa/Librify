@@ -12,6 +12,10 @@ const config = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "http",
+        hostname: "books.google.com",
+      },
     ]
   }
 };
