@@ -57,7 +57,7 @@ export default async function BookPage() {
                   </div>
                   <div>
                     <p className="text-sm">
-                      {book.description?.substring(0, 200) || "Please add your content here. Keep it short and simple. And smile :)"}
+                      {book.description?.substring(0, 200) ?? "Please add your content here. Keep it short and simple. And smile :)"}
                     </p>
                   </div>
                 </div>

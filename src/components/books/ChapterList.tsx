@@ -3,7 +3,7 @@ import { cn } from "~/lib/utils"
 import formatDateDistanceToNow from "~/lib/date-to-now";
 import { ScrollArea } from "../ui/scroll-area"
 import type { Chapter } from "~/types/chapter";
-import type { Paragraph } from "~/types/content-types";
+import type { Block } from "@blocknote/core";
 
 interface ChapterListProps {
 	items: Chapter[]
@@ -22,14 +22,15 @@ const ChapterList: React.FC<ChapterListProps> = ({
 }) => {
 
 	function getFirstParagraph(data: string): string | null {
-		const dataJson: Paragraph[] = JSON.parse(data);
+		const dataJson: Block[] = JSON.parse(data) as Block[];
 
 		const firstParagraph = dataJson.find((item) => item ? item.type === 'paragraph' : null);
 
-		if (firstParagraph && firstParagraph.content.length > 0) {
-			return firstParagraph.content.map((contentItem) => contentItem.text).join(' ');
+		if (firstParagraph && Array.isArray(firstParagraph.content)) {
+			return firstParagraph.content
+				.map((contentItem) => contentItem.type === 'text' ? contentItem.text : '')
+				.join(' ');
 		}
-
 		return null;
 	}
 	return (

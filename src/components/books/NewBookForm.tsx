@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Search } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import Image from "next/image";
+import type { BookResponse, Book } from "~/types/book-api";
 
 interface NewBookFormProps {
 	createById: string | undefined;
@@ -16,20 +17,20 @@ interface NewBookFormProps {
 interface SelectedBook {
 	title: string;
 	imageUrl: string | null;
-	year: number | null;
+	year: string | null;
 	author: string | null;
 	description: string | null;
 }
 
 function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 	const [query, setQuery] = useState("");
-	const [results, setResults] = useState([]);
+	const [results, setResults] = useState<Book[]>([]);
 	const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
 
 	useEffect(() => {
 		const delayDebounceFn = setTimeout(() => {
 			if (query) {
-				handleSearch();
+				void handleSearch();
 			}
 		}, 300);
 
@@ -41,25 +42,24 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 			const response = await fetch(
 				`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=10`
 			);
-			const data = await response.json();
-			setResults(data.items || []);
+			const data = await response.json() as BookResponse;
+			setResults(data.items);
 		} catch (error) {
 			console.error("Error fetching books:", error);
 		}
 	};
 
-	const handleSelectBook = (book: any) => {
+	const handleSelectBook = (book: Book) => {
 		setSelectedBook({
 			title: book.volumeInfo.title,
-			imageUrl: book.volumeInfo.imageLinks?.thumbnail,
-			year: book.volumeInfo.publishedDate,
-			author: book.volumeInfo.authors?.join(", "),
-			description: book.volumeInfo.description,
+			imageUrl: book.volumeInfo.imageLinks?.thumbnail ?? null,
+			year: book.volumeInfo.publishedDate ?? null,
+			author: book.volumeInfo.authors?.join(", ") ?? null,
+			description: book.volumeInfo.description ?? null,
 		});
 		setQuery(book.volumeInfo.title);
 		setResults([]);
 	};
-
 
 	return (
 		<form className={cn("grid items-start gap-4")} onSubmit={onSubmit}>
@@ -75,15 +75,15 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 					{results.length > 0 && (
 						<ScrollArea className="absolute z-10 bg-white border border-gray-300 rounded-md mt-1 w-full max-h-60 overflow-y-auto">
 							<ul>
-								{results.map((book: any) => (
+								{results.map((book) => (
 									<li
 										key={book.id}
 										onClick={() => handleSelectBook(book)}
 										className="cursor-pointer p-2 hover:bg-gray-200 flex items-start gap-2"
 									>
-										{book.volumeInfo.imageLinks ? (
+										{book.volumeInfo.imageLinks?.thumbnail ? (
 											<Image
-												src={book.volumeInfo.imageLinks?.thumbnail}
+												src={book.volumeInfo.imageLinks.thumbnail}
 												alt={book.volumeInfo.title}
 												width={48}
 												height={64}
@@ -152,9 +152,9 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 				</div>
 			)}
 			<input hidden name="createById" value={createById} />
-			<input hidden name="bookTitle" value={selectedBook?.title} />
+			<input hidden name="bookTitle" value={selectedBook?.title ?? ""} />
 			<input hidden name="bookImageUrl" value={selectedBook?.imageUrl ?? ""} />
-			<input hidden name="bookYear" value={selectedBook?.year ?? 0} />
+			<input hidden name="bookYear" value={selectedBook?.year ?? ""} />
 			<input hidden name="bookAuthor" value={selectedBook?.author ?? ""} />
 			<input hidden name="bookDesc" value={selectedBook?.description ?? ""} />
 			<Button type="submit">Add New Book</Button>
@@ -163,4 +163,3 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 }
 
 export default NewBookForm;
-

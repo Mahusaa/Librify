@@ -1,5 +1,5 @@
 "use client"
-import { Chapter } from "~/types/chapter";
+import type { Chapter } from "~/types/chapter";
 import dateFormatting from "~/lib/date-formatting";
 import ContentEditor from "./ContentEditor";
 import { useSaving } from "~/hooks/use-saving";
@@ -22,13 +22,13 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 				if (!response.ok) {
 					console.log("fetch content error")
 				}
-				const data = await response.json()
-				setInitialData(data.content)
+				const content = (await response.json() as { content: string }).content;
+				setInitialData(content)
 			} catch (error) {
 				console.log(error)
 			}
 		}
-		fetchChapter();
+		void fetchChapter();
 	}, [chapter?.id])
 	return (
 		<div className="flex flex-col h-full">
@@ -59,7 +59,6 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 						)}
 					</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
-						{/*chapter.content*/}
 						<ContentEditor
 							initialContent={initialData}
 							chapterId={chapter.id}
