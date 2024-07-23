@@ -6,6 +6,7 @@ import { cn } from "~/lib/utils";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
+import Image from "next/image";
 
 interface NewBookFormProps {
 	createById: string | undefined;
@@ -81,9 +82,11 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 										className="cursor-pointer p-2 hover:bg-gray-200 flex items-start gap-2"
 									>
 										{book.volumeInfo.imageLinks ? (
-											<img
+											<Image
 												src={book.volumeInfo.imageLinks?.thumbnail}
 												alt={book.volumeInfo.title}
+												width={48}
+												height={64}
 												className="w-12 h-16 object-cover"
 											/>
 										) : (
@@ -118,9 +121,11 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 					</Label>
 					<div className="flex flex-row gap-3">
 						{selectedBook.imageUrl && (
-							<img
+							<Image
 								src={selectedBook.imageUrl}
 								alt={selectedBook.title}
+								width={128}
+								height={192}
 								className="w-32 h-48 mt-2"
 							/>
 						)}
