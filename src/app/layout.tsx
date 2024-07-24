@@ -6,6 +6,7 @@ import MarginWidthWrapper from "~/components/MarginWidthWrapper";
 import HeaderMobile from "~/components/HeaderMobile";
 import SideBar from "~/components/sidebar";
 import Providers from "~/components/Providers";
+import { Toaster } from "~/components/ui/toaster";
 export const metadata = {
   title: "Librify",
   description: "This is my app",
@@ -35,6 +36,7 @@ export default function RootLayout({
             </main>
           </div>
         </Providers>
+        <Toaster />
       </body>
 
     </html>
