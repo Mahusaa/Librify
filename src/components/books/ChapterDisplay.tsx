@@ -1,40 +1,44 @@
 "use client"
+import { useEffect, useState } from "react";
 import type { Chapter } from "~/types/chapter";
 import dateFormatting from "~/lib/date-formatting";
 import ContentEditor from "./ContentEditor";
 import { useSaving } from "~/hooks/use-saving";
 import { Loader } from "lucide-react";
-import { useEffect, useState } from "react";
 
 interface ChapterDisplayProps {
 	chapter: Chapter | null;
 }
 
-
 const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
-	const [initialData, setInitialData] = useState<string>("")
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [initialData, setInitialData] = useState<string>("");
 	const { isSaving } = useSaving();
+
 	useEffect(() => {
 		if (!chapter?.id) return;
+		setIsLoading(true);
 		const fetchChapter = async () => {
 			try {
-				const response = await fetch(`/api/get-content?id=${chapter?.id}`)
+				const response = await fetch(`/api/get-content?id=${chapter?.id}`);
 				if (!response.ok) {
-					console.log("fetch content error")
+					console.log("fetch content error");
 				}
 				const content = (await response.json() as { content: string }).content;
-				setInitialData(content)
+				setInitialData(content);
 			} catch (error) {
-				console.log(error)
+				console.log(error);
 			}
-		}
+			setIsLoading(false);
+		};
 		void fetchChapter();
-	}, [chapter?.id])
+	}, [chapter?.id]);
+
 	return (
 		<div className="flex flex-col h-full">
 			{chapter ? (
 				<div className="flex flex-col h-full">
-					<div className="flex items-center justify-between p-4 border-b bg-white shadow-sm ">
+					<div className="flex items-center justify-between p-4 border-b bg-white shadow-sm">
 						<div className="flex items-center gap-4">
 							<div>
 								<div className="font-semibold text-lg text-gray-800">{`Chapter ${chapter.chapterId}: ${chapter.title}`}</div>
@@ -59,10 +63,21 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 						)}
 					</div>
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
-						<ContentEditor
-							initialContent={initialData}
-							chapterId={chapter.id}
-							bookId={chapter.bookId} />
+						{isLoading ? (
+							<div className="flex items-center justify-center h-full">
+								<div className="flex items-center justify-center space-x-2">
+									<div className="w-2 h-2 bg-black rounded-full animate-bounce"></div>
+									<div className="w-2 h-2 bg-black rounded-full animate-bounce delay-75"></div>
+									<div className="w-2 h-2 bg-black rounded-full animate-bounce delay-150"></div>
+								</div>
+							</div>
+						) : (
+							<ContentEditor
+								initialContent={initialData}
+								chapterId={chapter.id}
+								bookId={chapter.bookId}
+							/>
+						)}
 					</div>
 				</div>
 			) : (
@@ -72,6 +87,7 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 			)}
 		</div>
 	);
-}
+};
 
 export default ChapterDisplay;
+

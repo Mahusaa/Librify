@@ -10,6 +10,7 @@ import {
 } from "../ui/dialog";
 import NewBookForm from "./NewBookForm";
 import { createBook } from "~/action/create-book";
+import { useState } from "react";
 
 export function NewBookDialog({
 	children,
@@ -19,6 +20,7 @@ export function NewBookDialog({
 	createById: string | undefined;
 }) {
 	const [isOpen, setIsOpen] = React.useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleOpenChange = (open: boolean) => {
 		setIsOpen(open);
@@ -28,10 +30,13 @@ export function NewBookDialog({
 		event.preventDefault();
 		const formData = new FormData(event.currentTarget);
 		try {
+			setIsLoading(true);
 			await createBook(formData);
-			setIsOpen(false);
 		} catch (error) {
 			console.error("Failed to create chapter:", error);
+		} finally {
+			setIsLoading(false);
+			setIsOpen(false);
 		}
 	};
 
@@ -50,6 +55,7 @@ export function NewBookDialog({
 				<NewBookForm
 					createById={createById}
 					onSubmit={handleSubmit}
+					isLoading={isLoading}
 				/>
 			</DialogContent>
 		</Dialog>

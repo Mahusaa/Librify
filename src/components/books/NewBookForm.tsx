@@ -12,6 +12,7 @@ import type { BookResponse, Book } from "~/types/book-api";
 interface NewBookFormProps {
 	createById: string | undefined;
 	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+	isLoading: boolean;
 }
 
 interface SelectedBook {
@@ -22,7 +23,7 @@ interface SelectedBook {
 	description: string | null;
 }
 
-function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
+function NewBookForm({ createById, onSubmit, isLoading }: NewBookFormProps) {
 	const [query, setQuery] = useState("");
 	const [results, setResults] = useState<Book[]>([]);
 	const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
@@ -157,7 +158,7 @@ function NewBookForm({ createById, onSubmit }: NewBookFormProps) {
 			<input hidden name="bookYear" value={selectedBook?.year ?? ""} />
 			<input hidden name="bookAuthor" value={selectedBook?.author ?? ""} />
 			<input hidden name="bookDesc" value={selectedBook?.description ?? ""} />
-			<Button type="submit">Add New Book</Button>
+			<Button type="submit" isLoading={isLoading} disabled={isLoading}>Add New Book</Button>
 		</form>
 	);
 }

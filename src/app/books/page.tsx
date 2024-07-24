@@ -33,15 +33,15 @@ export default async function BookPage() {
         <ScrollArea className="h-screen">
           {books?.map((book, index) => (
             <Link href={`/books/${book.id}`} key={index + 1} scroll={false}>
-              <div className={cn("flex bg-white shadow-md hover:shadow-xl transition-shadow mb-6  rounded-md mr-4")} style={{ height: "150px" }}>
-                <div className="flex-shrink-0 overflow-hidden rounded-md mx-4" style={{ width: "100px", height: "135px" }}>
+              <div className={cn("flex bg-white shadow-md hover:shadow-xl transition-shadow mt-4 rounded-md mr-4 hover:bg-slate-100")} style={{ height: "150px" }}>
+                <div className="flex-shrink-0 my-2 overflow-hidden rounded-md mx-4" style={{ width: "100px", height: "135px" }}>
                   {book.imageUrl ? (
                     <Image
                       src={book.imageUrl}
                       alt={book.title}
                       width={100}
                       height={135}
-                      className={cn("h-auto w-full ")}
+                      className={cn("h-auto w-full")}
                     />
                   ) : (
                     <div className="bg-gray-200 w-full h-full flex items-center justify-center text-center text-sm text-gray-600">
