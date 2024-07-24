@@ -9,7 +9,7 @@ import { eq } from "drizzle-orm";
 export async function getMyBooks() {
   const session = await getServerSession(authOptions);
   const userId = session?.user.id;
-  if (!userId) throw new Error("Unauthorized");
+  if (!userId) return null;
 
   const books = await db.query.book.findMany({
     where: (model, { eq }) => eq(model.createdById, userId),

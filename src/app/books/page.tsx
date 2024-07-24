@@ -31,7 +31,7 @@ export default async function BookPage() {
       <Separator className="mb-6" />
       <div className="space-y-6">
         <ScrollArea className="h-screen">
-          {books.map((book, index) => (
+          {books?.map((book, index) => (
             <Link href={`/books/${book.id}`} key={index + 1} scroll={false}>
               <div className={cn("flex bg-white shadow-md hover:shadow-xl transition-shadow mb-6  rounded-md mr-4")} style={{ height: "150px" }}>
                 <div className="flex-shrink-0 overflow-hidden rounded-md mx-4" style={{ width: "100px", height: "135px" }}>
