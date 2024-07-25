@@ -67,11 +67,7 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{isLoading ? (
 							<div className="flex items-center justify-center h-full">
-								<div className="flex items-center justify-center space-x-2">
-									<div className="w-2 h-2 bg-black rounded-full animate-bounce"></div>
-									<div className="w-2 h-2 bg-black rounded-full animate-bounce delay-75"></div>
-									<div className="w-2 h-2 bg-black rounded-full animate-bounce delay-150"></div>
-								</div>
+								<Loader className="w-10 h-10 animate-spin" />
 							</div>
 						) : (
 							<ContentEditor
