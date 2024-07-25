@@ -41,8 +41,8 @@ const ChapterList: React.FC<ChapterListProps> = ({
 						<button
 							key={item.id}
 							className={cn(
-								"flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-								selectedChapterId === item.chapterId && "bg-muted"
+								"flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-muted",
+								selectedChapterId === item.chapterId && "border-primary"
 							)}
 							onClick={() => onSelect(item.chapterId)
 							}

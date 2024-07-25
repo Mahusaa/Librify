@@ -40,10 +40,10 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 		<div className="flex flex-col h-full">
 			{chapter ? (
 				<div className="flex flex-col h-full">
-					<div className="flex items-center justify-between p-4 border-b bg-white shadow-sm">
+					<div className="flex items-center justify-between p-4 border-b ">
 						<div className="flex items-center gap-4">
 							<div>
-								<div className="font-semibold text-lg text-gray-800">{`Chapter ${chapter.chapterId}: ${chapter.title}`}</div>
+								<div className="font-semibold text-lg ">{`Chapter ${chapter.chapterId}: ${chapter.title}`}</div>
 							</div>
 						</div>
 						{chapter.updatedAt && (
@@ -67,7 +67,7 @@ const ChapterDisplay: React.FC<ChapterDisplayProps> = ({ chapter }) => {
 					<div className="flex-1 overflow-y-auto p-2 text-sm whitespace-pre-wrap">
 						{isLoading ? (
 							<div className="flex items-center justify-center h-full">
-								<Loader className="w-10 h-10 animate-spin" />
+								<Loader className="w-10 h-10 text-primary-foreground animate-spin" />
 							</div>
 						) : (
 							<ContentEditor

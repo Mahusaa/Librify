@@ -52,9 +52,8 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, user, token }) {
-      console.log("session callback", { token, user, session });
       if (token) {
-        session.user.id = token.sub as string;
+        session.user.id = token.sub!;
         session.user.image = token.picture;
         session.user.email = token.email;
         session.user.name = token.name;
@@ -88,9 +87,10 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials) throw new Error('Invalid email or password');
         const user = await getUserByEmail(credentials.email);
-        if (user && user.password && await verifyPassword(credentials.password, user.password)) {
+        if (user?.password && await verifyPassword(credentials.password, user.password)) {
           return user;
         }
+
         throw new Error('Invalid email or password');
       }
     }),

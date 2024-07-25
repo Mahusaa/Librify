@@ -32,28 +32,28 @@ export function ChapterTextEditor({
 				onLayout={(sizes: number[]) => {
 					document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
 				}}
-				className="h-full items-stretch bg-gray-50"
+				className="h-full items-stretch "
 			>
-				<ResizablePanel defaultSize={defaultLayout[0]} minSize={30} className="bg-white border-r border-gray-200">
+				<ResizablePanel defaultSize={defaultLayout[0]} minSize={30} className="border-r ">
 
 					<div className="overflow-y-auto">
 						<BookDisplay book={book} />
 						<div className="flex items-center justify-between p-3">
-							<div className="flex flex-row items-center justify-between p-3  border-b border-gray-100 gap-2 w-full">
+							<div className="flex flex-row items-center justify-between p-3  border-b gap-2 w-full">
 								<div className="relative w-2/3 flex-1 ml-2">
-									<Search className="absolute left-2 top-2 h-4 w-4 text-gray-400" />
-									<Input placeholder="Search Chapter" className="pl-8 h-9 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+									<Search className="absolute left-2 top-2.5 h-4 w-4 " />
+									<Input placeholder="Search Chapter" className="pl-8 h-9 border  rounded-md focus:outline-none focus:ring-2  focus:border-transparent" />
 								</div>
 								<NewChapterDialog createById={book.createdById} bookId={book.id} chapterNow={book.chapters.length}>
-									<Button className="flex-none" variant="outline"><CirclePlus className="w-4 h-4 mr-1" />New</Button>
+									<Button className="flex-none" ><CirclePlus className="w-4 h-4 mr-1" />New</Button>
 								</NewChapterDialog>
 							</div>
 						</div>
 						<ChapterList items={book.chapters} selectedChapterId={selected} onSelect={setSelected} />
 					</div>
 				</ResizablePanel>
-				<ResizableHandle withHandle className="bg-gray-200" />
-				<ResizablePanel defaultSize={defaultLayout[1]} minSize={40} className="bg-white">
+				<ResizableHandle withHandle />
+				<ResizablePanel defaultSize={defaultLayout[1]} minSize={40} >
 					<ChapterDisplay chapter={book.chapters.find((item) => item.chapterId === selected) ?? null} />
 				</ResizablePanel>
 			</ResizablePanelGroup>

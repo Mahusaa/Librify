@@ -8,14 +8,16 @@ import { usePathname } from 'next/navigation';
 import { SIDENAV_ITEMS } from '~/types/side-bar-const';
 import { SideNavItem } from '~/types/SideNavItem';
 import { ChevronDown } from 'lucide-react';
+import { buttonVariants } from './ui/button';
+import { cn } from '~/lib/utils';
 
 const SideBar = () => {
 	return (
-		<div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
+		<div className="md:w-60  h-screen flex-1 fixed border-r hidden md:flex">
 			<div className="flex flex-col space-y-6 w-full">
 				<Link
 					href="/"
-					className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
+					className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b  h-12 w-full"
 				>
 					<span className="h-7 w-7 bg-zinc-300 rounded-lg" />
 					<span className="font-bold text-xl hidden md:flex">Librify</span>
@@ -78,12 +80,18 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 				</>
 			) : (
 				<Link
+					key={item.path}
 					href={item.path}
-					className={`flex flex-row space-x-4 items-center p-2 rounded-lg hover:bg-zinc-100 ${item.path === pathname ? 'bg-zinc-100' : ''
-						}`}
+					className={cn(
+						buttonVariants({ variant: "ghost" }),
+						item.path === pathname
+							? "bg-primary hover:bg-primary text-foreground"
+							: "hover:bg-transparent hover:underline",
+						"justify-start space-x-4 items-center w-full"
+					)}
 				>
 					{item.icon}
-					<span className="font-semibold text-xl flex">{item.title}</span>
+					<span className="text-xl flex">{item.title}</span>
 				</Link>
 			)}
 		</div>

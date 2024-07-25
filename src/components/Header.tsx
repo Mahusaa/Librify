@@ -11,7 +11,7 @@ const Header = async () => {
 	return (
 		<div
 			className={cn(
-				`sticky top-0 z-30 w-full transition-all border-b border-gray-200 bg-zinc-50`,
+				`sticky top-0 z-30 w-full transition-all border-b `,
 			)}
 		>
 			<div className="flex h-[47px] items-center justify-between px-4">

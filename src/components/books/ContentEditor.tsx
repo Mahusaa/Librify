@@ -9,6 +9,7 @@ import { useSaving } from "~/hooks/use-saving";
 import { useEffect, useState } from "react";
 import { useDebounce } from "~/hooks/use-debounce";
 import { ScrollArea } from "../ui/scroll-area";
+import "../../styles/editor-style.css"
 
 
 interface ContentEditorProps {
@@ -60,8 +61,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 				{editor && (
 					<BlockNoteView
 						editor={editor}
-						theme="light"
-						className="break-words  whitespace-pre-wrap w-full h-full"
+						className="break-words whitespace-pre-wrap w-full h-full bg-black"
 						onChange={() => {
 							setContent(JSON.stringify(editor.document));
 						}}

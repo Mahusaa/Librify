@@ -49,7 +49,7 @@ export function NewBookDialog({
 				<DialogHeader>
 					<DialogTitle>Add New Book</DialogTitle>
 					<DialogDescription>
-						Are you sure to make a new book? Click Add New Book when your&apose done.
+						Are you sure to make a new book? Click Add New Book when you&apos;r done.
 					</DialogDescription>
 				</DialogHeader>
 				<NewBookForm

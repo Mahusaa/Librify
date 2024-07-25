@@ -27,16 +27,20 @@ function NewBookForm({ createById, onSubmit, isLoading }: NewBookFormProps) {
 	const [query, setQuery] = useState("");
 	const [results, setResults] = useState<Book[]>([]);
 	const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
+	const [hasSelectedBook, setHasSelectedBook] = useState(false);
 
 	useEffect(() => {
-		const delayDebounceFn = setTimeout(() => {
-			if (query) {
-				void handleSearch();
-			}
-		}, 300);
+		if (!hasSelectedBook) {
+			const delayDebounceFn = setTimeout(() => {
+				if (query) {
+					void handleSearch();
+				}
+			}, 300);
 
-		return () => clearTimeout(delayDebounceFn);
-	}, [query]);
+			return () => clearTimeout(delayDebounceFn);
+
+		}
+	}, [query, hasSelectedBook]);
 
 	const handleSearch = async () => {
 		try {
@@ -60,6 +64,7 @@ function NewBookForm({ createById, onSubmit, isLoading }: NewBookFormProps) {
 		});
 		setQuery(book.volumeInfo.title);
 		setResults([]);
+		setHasSelectedBook(true);
 	};
 
 	return (
@@ -71,16 +76,16 @@ function NewBookForm({ createById, onSubmit, isLoading }: NewBookFormProps) {
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						placeholder="Search Books"
-						className="pl-8 h-9 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+						className="pl-8 h-9 rounded-md focus:outline-none focus:ring-2 focus:border-transparent"
 					/>
 					{results.length > 0 && (
-						<ScrollArea className="absolute z-10 bg-white border border-gray-300 rounded-md mt-1 w-full max-h-60 overflow-y-auto">
+						<ScrollArea className="absolute z-10  border border-primary rounded-md mt-1 w-full max-h-60 overflow-y-auto">
 							<ul>
 								{results.map((book) => (
 									<li
 										key={book.id}
 										onClick={() => handleSelectBook(book)}
-										className="cursor-pointer p-2 hover:bg-gray-200 flex items-start gap-2"
+										className="cursor-pointer p-2 hover:bg-muted flex items-start gap-2"
 									>
 										{book.volumeInfo.imageLinks?.thumbnail ? (
 											<Image
@@ -97,13 +102,13 @@ function NewBookForm({ createById, onSubmit, isLoading }: NewBookFormProps) {
 										)}
 										<div>
 											<h3 className="font-semibold">{book.volumeInfo.title.substring(0, 35) + "..."}</h3>
-											<p className="text-sm text-gray-600">
+											<p className="text-sm text-muted-foreground">
 												{book.volumeInfo.authors?.join(", ")}
 											</p>
-											<p className="text-sm text-gray-600">
+											<p className="text-sm text-muted-foreground">
 												{book.volumeInfo.publishedDate}
 											</p>
-											<p className="text-sm text-gray-600">
+											<p className="text-sm text-muted-foreground">
 												{book.volumeInfo.description?.substring(0, 50) + "..."}
 											</p>
 										</div>
@@ -116,35 +121,32 @@ function NewBookForm({ createById, onSubmit, isLoading }: NewBookFormProps) {
 			</div>
 
 			{selectedBook && (
-				<div className="p-2 border border-gray-300 rounded-md">
-					<Label className="text-black font-semibold text-lg">
-						Selected Book:
-					</Label>
-					<div className="flex flex-row gap-3">
+				<div className="p-2 border rounded-md">
+					<div className="flex flex-row gap-3 items-center">
 						{selectedBook.imageUrl && (
 							<Image
 								src={selectedBook.imageUrl}
 								alt={selectedBook.title}
 								width={128}
 								height={192}
-								className="w-32 h-48 mt-2"
+								className="w-32 h-48 mt-2 rounded-md m-auto"
 							/>
 						)}
-						<div className="flex flex-col mt-5">
+						<div className="flex flex-col justify-center">
 							<h2 className="text-lg font-semibold">
 								{selectedBook.title}
 							</h2>
-							<p className="text-sm text-gray-600">
+							<p className="text-sm ">
 								<strong>Author(s):</strong>{" "}
 								{selectedBook.author}
 							</p>
-							<p className="text-sm text-gray-600">
+							<p className="text-sm ">
 								<strong>Published Date:</strong>{" "}
 								{selectedBook.year
 									? selectedBook.year
 									: "unknown"}
 							</p>
-							<p className="text-sm text-gray-600">
+							<p className="text-sm ">
 								<strong>Description:</strong>{" "}
 								{selectedBook.description?.substring(0, 150) + "..."}
 							</p>
