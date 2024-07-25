@@ -2,17 +2,16 @@
 import Link from 'next/link';
 import { cn } from '~/lib/utils';
 import AvatarWrap from './AvatarWrap';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '~/server/auth';
+import { getServerAuthSession } from '~/server/auth';
 import { DialogSignIn } from './SignInDialog';
 import { Button } from './ui/button';
 
 const Header = async () => {
-	const session = await getServerSession(authOptions);
+	const session = await getServerAuthSession();
 	return (
 		<div
 			className={cn(
-				`sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 bg-zinc-50`,
+				`sticky top-0 z-30 w-full transition-all border-b border-gray-200 bg-zinc-50`,
 			)}
 		>
 			<div className="flex h-[47px] items-center justify-between px-4">

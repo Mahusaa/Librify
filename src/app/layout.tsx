@@ -24,12 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.className}`}>
-      <body>
+    <html lang="en" className={`${inter.className} h-full`}>
+      <body className="h-full overflow-hidden">
         <Providers>
-          <div className="flex">
+          <div className="flex h-full">
             <SideBar />
-            <main className="flex-1">
+            <main className="flex-1 flex-col overflow-hidden">
               <MarginWidthWrapper>
                 <Header />
                 <HeaderMobile />

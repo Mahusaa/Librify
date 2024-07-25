@@ -6,13 +6,12 @@ import { getMyBooks } from "~/server/queries";
 import { Button } from "~/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import NewBookDialog from "~/components/books/NewBookDialog";
-import { getServerSession } from "next-auth";
-import { authOptions } from "~/server/auth";
+import { getServerAuthSession } from "~/server/auth";
 import { ScrollArea } from "~/components/ui/scroll-area";
 
 export default async function BookPage() {
   const books = await getMyBooks();
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   return (
     <div className="p-6">
@@ -30,7 +29,7 @@ export default async function BookPage() {
       </div>
       <Separator className="mb-6" />
       <div className="space-y-6">
-        <ScrollArea className="h-screen">
+        <ScrollArea className="h-[420px]">
           {books?.map((book, index) => (
             <Link href={`/books/${book.id}`} key={index + 1} scroll={false}>
               <div className={cn("flex bg-white shadow-md hover:shadow-xl transition-shadow mt-4 rounded-md mr-4 hover:bg-slate-100")} style={{ height: "150px" }}>
