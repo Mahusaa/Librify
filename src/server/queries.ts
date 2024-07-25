@@ -5,7 +5,12 @@ import { db } from "./db";
 import { chapter } from "./db/schema";
 import { eq } from "drizzle-orm";
 
-
+export async function getUserByEmail(email: string) {
+  const user = await db.query.users.findFirst({
+    where: (model, { eq }) => eq(model.email, email),
+  })
+  return user;
+}
 export async function getMyBooks() {
   const session = await getServerSession(authOptions);
   const userId = session?.user.id;

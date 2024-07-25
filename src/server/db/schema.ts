@@ -28,6 +28,7 @@ export const users = createTable("user", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
+  password: varchar("password", { length: 255 }),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

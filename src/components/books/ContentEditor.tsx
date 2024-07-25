@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "~/hooks/use-debounce";
 import { ScrollArea } from "../ui/scroll-area";
 
+
 interface ContentEditorProps {
 	chapterId: string;
 	initialContent: string | null;
@@ -20,6 +21,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 	const [content, setContent] = useState("");
 	const debounceSave = useDebounce(content)
 	const { setIsSaving } = useSaving();
+
 	const editor: BlockNoteEditor = useCreateBlockNote({
 		initialContent: initialContent ? JSON.parse(initialContent) as PartialBlock[] : undefined,
 	}, [chapterId, initialContent]);
@@ -55,14 +57,16 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialContent, chapterId
 	return (
 		<ScrollArea className="h-screen overflow-hidden">
 			<div className="w-full h-full overflow-hidden">
-				<BlockNoteView
-					editor={editor}
-					theme="light"
-					className="break-words  whitespace-pre-wrap w-full h-full"
-					onChange={() => {
-						setContent(JSON.stringify(editor.document));
-					}}
-				/>
+				{editor && (
+					<BlockNoteView
+						editor={editor}
+						theme="light"
+						className="break-words  whitespace-pre-wrap w-full h-full"
+						onChange={() => {
+							setContent(JSON.stringify(editor.document));
+						}}
+					/>
+				)}
 			</div>
 		</ScrollArea>
 	);

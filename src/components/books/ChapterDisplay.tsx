@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import type { Chapter } from "~/types/chapter";
 import dateFormatting from "~/lib/date-formatting";
-import ContentEditor from "./ContentEditor";
 import { useSaving } from "~/hooks/use-saving";
 import { Loader } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const ContentEditor = dynamic(() => import("./ContentEditor"), { ssr: false })
 
 interface ChapterDisplayProps {
 	chapter: Chapter | null;

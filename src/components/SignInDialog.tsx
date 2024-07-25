@@ -7,6 +7,7 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 import UserAuthForm from "./UserAuthform"
+import { signIn } from "next-auth/react"
 
 
 export function DialogSignIn({ children }: { children: React.ReactNode }) {
@@ -49,17 +50,50 @@ export function DialogSignIn({ children }: { children: React.ReactNode }) {
 }
 
 function ProfileForm({ className }: React.ComponentProps<'form'>) {
+	const [email, setEmail] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const handleSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+		setIsLoading(true)
+		const result = await signIn('credentials', {
+			redirect: false,
+			email,
+			password,
+		});
+
+		if (result?.error) {
+			console.error(result.error);
+			// Optionally display an error message to the user
+		} else {
+			setIsLoading(false);
+		}
+	};
 	return (
-		<form className={cn("grid items-start gap-4", className)}>
+		<form className={cn("grid items-start gap-4", className)} onSubmit={handleSubmit}>
 			<div className="grid gap-2">
 				<Label htmlFor="email">Email</Label>
-				<Input type="email" id="email" placeholder="Email" aria-required="true" />
+				<Input
+					type="email"
+					id="email"
+					placeholder="Email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					required
+				/>
 			</div>
 			<div className="grid gap-2">
 				<Label htmlFor="password">Password</Label>
-				<Input type="password" id="password" placeholder="Password" aria-required="true" />
+				<Input
+					type="password"
+					id="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					required
+				/>
 			</div>
-			<Button type="submit" className="w-full">Login</Button>
+			<Button type="submit" className="w-full" isLoading={isLoading} disabled={isLoading}>Sign In</Button>
 		</form>
 	);
 }

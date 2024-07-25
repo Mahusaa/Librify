@@ -4,6 +4,8 @@ import type { DefaultSession, NextAuthOptions, } from "next-auth"
 import type { Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
 import GitHubProvider from "next-auth/providers/github";
+import Credentials from "next-auth/providers/credentials";
+import { verifyPassword } from "~/lib/auth-utils";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
@@ -13,6 +15,7 @@ import {
   users,
   verificationTokens,
 } from "~/server/db/schema";
+import { getUserByEmail } from "./queries";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -41,11 +44,25 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    async session({ session, user }) {
+    async jwt({ token }) {
+      return token;
+    },
+    async session({ session, user, token }) {
+      console.log("session callback", { token, user, session });
+      if (token) {
+        session.user.id = token.sub as string;
+        session.user.image = token.picture;
+        session.user.email = token.email;
+        session.user.name = token.name;
+        return session
+      }
       session.user.id = user.id;
       return session;
-    }
+    },
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
@@ -61,7 +78,22 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
-    })
+    }),
+    Credentials({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "text" },
+      },
+      async authorize(credentials) {
+        if (!credentials) throw new Error('Invalid email or password');
+        const user = await getUserByEmail(credentials.email);
+        if (user && user.password && await verifyPassword(credentials.password, user.password)) {
+          return user;
+        }
+        throw new Error('Invalid email or password');
+      }
+    }),
     /**
      * ...add more providers here.
      *
